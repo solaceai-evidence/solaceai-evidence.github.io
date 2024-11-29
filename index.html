@@ -25,6 +25,7 @@
         
         <ul>
           <li><a href="#about">About</a></li>
+          <li><a href="#our-approach">Our approach</a></li>
           <li><a href="#team">Team</a></li>
           <li><a href="#funding">Funding</a></li>
         </ul>
@@ -52,9 +53,58 @@
             rigorously evaluate the accuracy of system components. The system will
             be evaluated in six diverse case studies—concrete, urgent problems which
             our collaborators are facing globally.</p>
-            
+
+            <p>We will design, deploy, and evaluate the system through six global
+              case studies (see <a href="#casestudy-table">Table</a>)—examples of
+              the diverse question types that SOLACE-AI will address—and rigorously
+              evaluate its outputs to determine its fitness-for-use.</p>
+            <figure id="casestudy-table">
+              <table>
+                <colgroup>
+                <col style="width: 19%" />
+                <col style="width: 80%" />
+                </colgroup>
+                <thead>
+                <tr>
+                <th>Case study setting</th>
+                <th>Problem</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                <td>Ethiopia</td>
+                <td>Addressing poor mental health and substance misuse in displaced
+                communities</td>
+                </tr>
+                <tr>
+                <td>South Africa</td>
+                <td>Managing cholera risk after flooding</td>
+                </tr>
+                <tr>
+                <td>Global/MSF</td>
+                <td>Responding to arbovirus outbreaks</td>
+                </tr>
+                <tr>
+                <td>India</td>
+                <td>Cardiovascular impacts of extreme heat in vulnerable
+                populations</td>
+                </tr>
+                <tr>
+                <td>Somaliland</td>
+                <td>Climate-change related anthrax risk</td>
+                </tr>
+                <tr>
+                <td>Scotland</td>
+                <td>Managing impact of climate change on respiratory disease</td>
+                </tr>
+                </tbody>
+                </table>
+                <figcaption>Initial proposals for case studies</figcaption>
+            </figure>
+            <figure>
             <img src="img/example.png" width="75%"/>
-            
+              <figcaption>Example of how Solace-AI could look in the example of tackling Cholera outbreaks</figcaption>
+           </figure>
             <p>Our aim is to drastically reduce the time, effort, and cost of
             producing evidence syntheses. The syntheses created by SOLACE-AI will be
             on-demand, always up-to-date, and could address problems, countries, and
@@ -62,6 +112,255 @@
             high-quality evidence into the hands of those facing and dealing with
             climate health problems could lead to better decision-making and
             ultimately improve the lives of affected community residents.</p>
+        </section>
+        <section id="our-approach">
+          <h5>Our Approach</h5>
+<p>The research is structured in five workstreams running throughout the
+project. In Workstream 1, we will engage with users to co-design the
+system. Workstreams 2–4 will develop and test the new computational
+methods needed to conduct automated research synthesis. We decompose
+this task into: identifying relevant evidence (Workstream 2), developing
+critically appraised summaries (Workstream 3), and synthesis (Workstream
+4). Workstream 5 comprises rigorous assessment of scientific validity of
+the components and the overall system, deployed in diverse case
+studies. </p>
+<p><strong>Workstream 1. Engagement and co-creation of the system with
+global partners (Fairall/Pollitt)</strong></p>
+<p>Problem statement: Low-and-middle-income countries disproportionately
+experience the impacts of climate change. It is critical to work with
+populations, policy makers, humanitarian and health professionals living
+and working in affected areas to maximise the impact of SOLACE-AI.</p>
+<p>Aims: We will co-create SOLACE-AI with diverse stakeholders living
+and working in areas affected by climate change to ensure it addresses
+their needs. </p>
+<p>Approach: We will convene a wide group of experts in climate,
+evidence synthesis, policy, humanitarian aid, healthcare, and members of
+the public affected by climate change. This stakeholder group will be
+diverse in expertise, experience, and location. We will use a
+transdisciplinary community-based
+participatory research (CBPR) approach, recognised as a more equitable
+methodology for involving communities most impacted by climate change.  We will
+engage with this group regularly through workshops, regular contact via
+email/phone calls, and smaller-group online meetings. Members will
+provide critical oversight of the project: informing methods,
+evaluation, and system design; providing expertise and local knowledge.
+We will use participatory design activities, such as storyboarding, and
+low-fidelity prototypes to co-design the system. The stakeholder group
+will define six case studies: examples of urgent problems faced by
+specific communities. These case studies will provide a focus for both
+the design of SOLACE-AI and its real-world evaluation (in Workstream
+5).</p>
+<table>
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr>
+<td><em>Example case study: Addressing mental health and substance abuse
+problems in populations affected by climate change in
+Ethiopia</em><br><br>The Somali region of eastern Ethiopia has a long
+history of nomadic pastoral living, a traditional way of life for
+millions, rearing camels, cattle, sheep, and goats on natural
+grasslands. Since the 1950s, extreme weather events since have caused
+devastating droughts and flash-floods. Increased food and water
+insecurity, disease outbreaks, lost livelihoods, forced migration,
+conflicts, and the loss of valued landscapes due to climate change have
+led to escalating mental health problems, including suicide and
+substance abuse. Yet mental health services in the Somali region of
+Ethiopia are woefully inadequate. In this case study we will investigate
+whether SOLACE-AI could support evidence-based responses to this
+crisis.</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>To maximise policy impact, we will hold two Policy Labs (month six in
+Addis Ababa, Ethiopia; and year two online). Policy Labs,
+pioneered by King’s Policy Institute bring together key decision makers,
+professionals, and the public to tackle practical questions to inform
+policy and practice; based around day-long structured workshops. We have
+adapted and conducted Labs in low- and middle-income settings. Topics
+will be selected with stakeholder input to reflect local context,
+cultures, and priorities; and might include, e.g. issues of trust,
+health equity, and quality assurance for AI systems to inform climate
+emergencies. Through follow-on activities—e.g., implementation
+workshops—we will generate lasting investment by participants,
+developing a valuable network of advisors and champions to support
+development and implementation.</p>
+<p><strong>Workstream 2. Methods for automatically identifying evidence
+needed to address climate health problems
+(Wallace/Marshall)</strong></p>
+<p>Problem statement: The evidence needed to address climate health
+impacts is overwhelming, and new publications accumulate daily. Existing
+interfaces to the literature are based predominantly on keyword search,
+but this is inadequate to facilitate efficient evidence retrieval and
+synthesis.</p>
+<p>Aims: We will develop new LLM-based methods to identify comprehensive
+collections of documents which address natural language questions on
+climate-health problems. </p>
+<p>Approach: Evidence syntheses require a comprehensive, unbiased set of
+all evidence addressing a particular question. Rather than
+relying on traditional information retrieval methods that search over
+unstructured texts, we propose to investigate novel zero-shot neural
+information retrieval methods for identifying all relevant evidence that
+will also surface the specific passages or snippets justifying its
+relevance. While there is a large body of work on semi-automated
+abstract screening—including by
+the applicants—modern
+LLMs offer the enticing possibility of dramatically more efficient
+systems for this task, given their well-documented zero-/few-shot
+capabilities;
+this may support culling the entire set of studies relevant to an
+arbitrary query without manually screening a subset, i.e., on-demand and
+fully automatically.</p>
+<p>Our partners need syntheses to incorporate diverse scientific and
+humanitarian reports, impact evaluations, policy documents, national and
+international guidelines, and local geographical/social/political
+knowledge. We will therefore consider documents including from OpenAlex,
+World Bank, WHO scorecards/factsheets, GBDCompare, the 3ie development
+portal, and ReliefWeb; final data sources will be selected in Workstream
+1. We will create evaluation datasets based on diverse systematic
+reviews in the WHO Repository of Systematic Reviews on Interventions in
+Environment, Climate Change and Health (created by Shrikhande); and the
+IRC’s review collection.</p>
+<p>“Classic” approaches to retrieval use keyword-based representations
+of documents which are unlikely to capture subtle aspects of study
+eligibility (e.g., components of complex interventions). Modern LLMs can
+provide free-text rationales—which the applicants have worked on
+extensively—and will
+allow us to consider full-text articles, providing the detail needed to
+make inclusion/exclusion decisions.</p>
+<p>As a baseline approach we will evaluate zero-shot GPT models.
+However, we prefer to not depend upon OpenAI models, which are
+closed-source, black-box, and can be modified unpredictably over time.
+Therefore, we will combine rationales provided by GPT with reference
+relevance labels from the training set to teach Mistral-Instruct (or
+similar) to provide explanations. We will also investigate ranking
+evidence reports, according to the probabilities assigned by the LLM to
+tokens indicating that a study should be included. This will permit
+direct comparison between DPR and LLM-based methods. We will then
+experiment with eliciting reasons for exclusion to allow users to verify
+automated decisions. </p>
+<p><strong>Workstream 3. Automated critical summaries of individual
+evidence reports (Marshall/Wallace)</strong></p>
+<p>Problem statement: LLMs are effective at summarising documents, but
+they take author text at face value. But research synthesis requires
+that evidence is critically appraised so that more weight is placed on
+the highest quality research. </p>
+<p>Aims: We will investigate LLM methods for producing critical
+narrative summaries of individual studies considering the validity of
+findings and health equity by creating LLM modules which explicitly
+perform distinct sub-tasks of rigorous evidence synthesis.</p>
+<p>Approach: We will co-design semi-structured extraction templates for
+diverse evidence reports, with stakeholders (Workstream 1), and the
+Brown and IRC teams. These will include information relating to methods,
+setting, participants, interventions, and findings, and information
+relevant to health equity (PROGRESS-Plus), and quality
+assessment. Using state-of-the-art LLMs, we will conditionally extract
+(or infer) narratives describing these fields from evidence reports.</p>
+<p>This approach brings several benefits. First, by instantiating
+different LLMs for each sub-task, we can capitalise on the strengths of
+current generative AI without sacrificing the principles of formal,
+rigorous evidence synthesis. Second, a modular approach yields
+intermediate outputs (e.g., structured results, quality assessments)
+which can be inspected, providing a verification mechanism. Third, this
+modular approach means that we can rapidly incorporate new LLMs as they
+emerge—crucial given the fast-changing landscape.</p>
+<p>We will evaluate zero- and few-shot approaches for very large models,
+and fine-tuning methods for smaller LMs. We will explore methods for
+abstaining from providing findings in cases of low certainty. Based on
+the need for mixed-methods synthesis for climate-health topics, our
+starting point for development of this module, will be the MMAT (2018)
+tool; which
+provides a framework for quality assessment for qualitative, randomised
+controlled, non-randomised, quantitative descriptive, and mixed methods
+research. We will supplement the MMAT with the 3ie tool for systematic
+reviews, and
+consider additional quality measures based on input from Workstream
+1.</p>
+<p>We have previously defined logistic regression and Convolution Neural
+Network (CNN) models for risk of bias assessment in randomised trials. Here we will
+adopt an LLM (such as Mistral), and treat risk of bias prediction as a
+text-to-text problem for each quality prompt, generating (a) an
+assessment (yes/no/can’t tell) and (b) a rationale supporting this. </p>
+<p><strong>Workstream 4. Automated, scientifically robust, synthesis
+(Marshall/Mishra/Wallace)</strong></p>
+<p>Problem statement: SOLACE-AI must synthesise evidence from published
+and unpublished reports that align with user preferences and aggregate
+the key semi-structured data from sources appropriately and
+transparently. </p>
+<p>Aims: We will design, implement, and evaluate novel strategies which
+enable LLMs to generate rigorous overviews of article collections in
+accordance with established principles of evidence synthesis. </p>
+<p>Approach: To encourage models to generate meaningful syntheses of
+evidence in its outputs, we will conditionally generate summaries on the
+basis of the key elements extracted and inferred from outputs of modules
+in the preceding workstream. We hypothesise that conditioning summary
+generation in this way—combined with appropriate prompting and/or
+fine-tuning—will yield meaningful synthesised narrative overviews of
+evidence collections. </p>
+<p>Current generation LLMs (e.g. GPT) do not reliably synthesise
+findings across multiple documents. Here, we will
+develop methods which aim to produce reports that are grounded in
+critical appraisal of the underlying studies, and faithful to the
+statistical results. This module will consume the outputs of the modules
+from Workstream 2–3 and generate a narrative summary of the evidence on
+the basis of these. We will work with stakeholders to understand their
+information needs and wants in terms of narrative evidence overviews,
+following our preliminary work. We will start
+by simply conditioning the model on the extracted and inferred elements,
+put together into a prompt and combined with instructions to aggregate.
+Should simple prompting strategies prove insufficient, we will explore
+structured decoding techniques for generation that attempt to
+enforce fidelity to the inputs provided, and which may incorporate
+explicit aggregation steps to put the given evidence together. We plan
+to incorporate state-of-the-art machine learning translation approaches
+(including emerging low-resource language LLMs) to provide
+evidence in users’ local languages.</p>
+<p><strong>Workstream 5. Evaluation of the methods
+(Trikalinos/Shrikhande), and the final synthesis system
+(Warfa/Abdulahi)</strong></p>
+<p>Problem statement: We need to evaluate the utility of the new
+technologies we develop, both in terms of scientific validity and in
+their ability to impact policy, humanitarian responses, and affected
+populations.</p>
+<p>Aims: We will combine technologies developed in workstreams 2–4, to
+provide real time analysis in response to queries. We will stress test
+the system using tailored “red-teaming” methods, which have emerged as
+best-practice for evaluating LLMs and the user-facing systems they
+enable. We will deploy the system in the case studies (Workstream 1),
+and evaluate the usability, accuracy, and usefulness of the outputs for
+improving policy and humanitarian decision making in the real-world.</p>
+<p>Approach: We will develop and apply red-team methods to evaluate the
+scientific validity of our system’s outputs and to identify error
+modes.
+Red-teams are independent researchers tasked with adversarially probing
+a system for errors or vulnerabilities. Red-teaming has been used to
+identify prompts which would cause LLMs such as ChatGPT to generate
+harmful or offensive content, and updated models to prevent such
+behaviour. A
+team led by Trikalinos, with input on climate/humanitarian synthesis
+methods (Shrikhande/Mishra) will apply these principles to validate our
+system, scrutinising intermediate steps and final outputs. Problems will
+be addressed through improvements to the methods in Workstreams 2–4,
+and/or making changes to the output displays (e.g., presenting
+caveats/warnings).</p>
+<p>Warfa and Abdulahi will lead the evaluation of the deployed system.
+Our goal is to move beyond assessments of accuracy and consider the
+potential of the system to translate to action for impacted communities,
+policymakers, and other stakeholders. Partners leading each of the six
+case studies developed in Workstream 1 will convene community evaluation
+groups; including policy makers, humanitarian practitioners, health
+workers, and members of the affected populations. In CBPR, community
+members provide critical oversight on the research; and participate
+actively in defining research questions, and evaluation methods. We will
+use local facilitators, to enable people to participate in their local
+language(s). We collaborate with communities to define qualitative and
+quantitative evaluation methods; which seek to understand the utility of
+the system in practice, and understand and overcome barriers to
+impact.</p>
         </section>
         <section id="team">
             <h5>Research Team</h5>
