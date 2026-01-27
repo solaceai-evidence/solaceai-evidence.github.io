@@ -1,0 +1,895 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Newsreader:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <title>Solace-AI - Ethiopia Climate Displacement Evidence Report</title>
+    <style>
+        :root {
+            --pico-font-family: 'Newsreader', serif;
+            --sidebar-width: 280px;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Inter', sans-serif;
+        }
+
+        details {
+            margin-bottom: 1rem;
+        }
+
+        details summary {
+            line-height: 1.5rem;
+            font-weight: 600;
+        }
+
+        .sources-count {
+            font-size: 0.875rem;
+            color: var(--pico-muted-color);
+            font-style: italic;
+        }
+
+        /* Top logo header - not sticky */
+        body>header.top-header {
+            padding: 1rem;
+            border-bottom: 1px solid var(--pico-muted-border-color);
+        }
+
+        body>header.top-header .container-fluid {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        body>header.top-header img {
+            height: 32px;
+            width: auto;
+        }
+
+        /* Sticky navigation breadcrumb */
+        nav.sticky-nav {
+            position: sticky;
+            top: -1px;
+            z-index: 10;
+            background-color: var(--pico-background-color);
+            border-bottom: 1px solid var(--pico-muted-border-color);
+            padding: 0.75rem 1rem;
+        }
+
+        nav.sticky-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        nav.sticky-nav li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        nav.sticky-nav .nav-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.5rem;
+            background: none;
+            border: none;
+            color: var(--pico-color);
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 1rem;
+            border-radius: var(--pico-border-radius);
+            transition: background-color var(--pico-transition);
+        }
+
+        nav.sticky-nav .nav-toggle:hover {
+            background-color: var(--pico-secondary-hover-background);
+        }
+
+        nav.sticky-nav .nav-toggle svg {
+            width: 20px;
+            height: 20px;
+            stroke-width: 2;
+        }
+
+        nav.sticky-nav .separator {
+            color: var(--pico-muted-color);
+            font-weight: 300;
+        }
+
+        /* Layout with sidebar */
+        body {
+            margin: 0;
+        }
+
+        .page-container {
+            display: grid;
+            grid-template-columns: var(--sidebar-width) 1fr;
+            min-height: calc(100vh - 73px);
+        }
+
+        /* Sidebar Navigation */
+        aside#sidebar-nav {
+            border-right: 1px solid var(--pico-muted-border-color);
+            overflow-y: auto;
+            background-color: var(--pico-background-color);
+            display: flex;
+            flex-direction: column;
+        }
+
+        aside#sidebar-nav nav {
+            position: sticky;
+            top: 0;
+            background-color: var(--pico-background-color);
+            padding: 1.5rem;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        aside#sidebar-nav nav .nav-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--pico-muted-border-color);
+        }
+
+        aside#sidebar-nav nav .nav-header h2 {
+            margin: 0;
+            font-size: 1.25rem;
+        }
+
+        aside#sidebar-nav nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        aside#sidebar-nav nav li {
+            margin: 0.25rem 0;
+        }
+
+        aside#sidebar-nav nav a {
+            display: block;
+            padding: 0.5rem 0.75rem;
+            border-radius: var(--pico-border-radius);
+            text-decoration: none;
+            color: var(--pico-color);
+            transition: background-color var(--pico-transition);
+        }
+
+        aside#sidebar-nav nav a:hover {
+            background-color: var(--pico-secondary-hover-background);
+        }
+
+        aside#sidebar-nav nav a.active {
+            background-color: var(--pico-primary-background);
+            color: var(--pico-primary-inverse);
+        }
+
+        /* Close button (mobile only) */
+        aside#sidebar-nav .close-btn {
+            display: none;
+            padding: 0.5rem;
+            margin: 0;
+            background: none;
+            border: none;
+            opacity: 0.7;
+            transition: opacity var(--pico-transition);
+            cursor: pointer;
+        }
+
+        aside#sidebar-nav .close-btn:hover {
+            opacity: 1;
+        }
+
+        aside#sidebar-nav .close-btn svg {
+            width: 1.25rem;
+            height: 1.25rem;
+            display: block;
+        }
+
+        /* Main content area */
+        main.content-area {
+            overflow-x: hidden;
+        }
+
+        main.content-area>.container {
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+
+        /* Back to Top */
+        #back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 100;
+            display: none;
+            border-radius: 50%;
+            padding: 0;
+            width: 3rem;
+            height: 3rem;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        #back-to-top svg {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+
+        /* Mobile styles (below 1024px) */
+        @media (max-width: 1023px) {
+            .page-container {
+                grid-template-columns: 1fr;
+            }
+
+            aside#sidebar-nav {
+                position: fixed;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                width: 85%;
+                max-width: 320px;
+                z-index: 1000;
+                transform: translateX(-100%);
+                transition: transform 0.2s ease-in-out;
+                box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            }
+
+            aside#sidebar-nav.is-open-on-mobile {
+                transform: translateX(0);
+            }
+
+            aside#sidebar-nav .close-btn {
+                display: block;
+            }
+
+            aside#sidebar-nav nav .nav-header {
+                display: flex;
+            }
+
+            /* Overlay when sidebar is open */
+            body::before {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 999;
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+            }
+
+            body.sidebar-open::before {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            /* Prevent scrolling when sidebar is open */
+            body.sidebar-open {
+                overflow: hidden;
+            }
+        }
+
+        /* Desktop: hide close button and nav header */
+        @media (min-width: 1024px) {
+            aside#sidebar-nav nav .nav-header {
+                display: none;
+            }
+
+            nav.sticky-nav {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Top Logo Header (not sticky) -->
+    <header class="top-header">
+        <div class="container-fluid">
+            <img src="img/solacelogo.svg" alt="Solace-AI" style="height: 60px;">
+        </div>
+    </header>
+
+    <!-- Sticky Navigation Breadcrumb (mobile only) -->
+    <nav class="sticky-nav">
+        <ul>
+            <li>
+                <a href="#" class="nav-toggle" id="mobile-menu-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </a>
+            </li>
+            <!-- <li class="separator">›</li> -->
+            <li>Ethiopian Climate Mental Health Evidence Review</li>
+        </ul>
+    </nav>
+
+    <div class="page-container">
+        <!-- Sidebar Navigation -->
+        <aside id="sidebar-nav">
+            <nav>
+                <div class="nav-header">
+                    <h2>Navigation</h2>
+                    <button class="close-btn" aria-label="Close menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <ul>
+                    <li><a href="#top" class="active">Home</a></li>
+                    <li><a href="#recommendations">Recommendations</a></li>
+                    <li><a href="#evidence">Evidence</a></li>
+                    <li><a href="#background">Background</a></li>
+                    <li><a href="#citations">Citations</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="content-area" id="top">
+            <div class="container">
+
+                <h2>Addressing Mental Health and Substance Misuse in Climate-Displaced Ethiopian Communities</h2>
+
+
+                <article>
+                    <h3>Why this matters</h3>
+                    <ul>
+                        <li>Climate emergencies are accelerating internal displacement in Ethiopia</li>
+                        <li>Displacement significantly elevates risks of mental health problems (e.g., depression,
+                            anxiety,
+                            post-traumatic stress disorder) and substance misuse</li>
+                        <li>Evidence-based interventions span several domains including psychosocial support,
+                            community-based care,
+                            substance use treatment, and integration with climate adaption.</li>
+                    </ul>
+                </article>
+
+                <article id="recommendations">
+                    <h3>Recommendations for decision-makers</h3>
+                    <ol>
+                        <li>Scale community-based psychosocial support in displacement settings</li>
+                        <li>Invest in task-shifting models using trained lay providers</li>
+                        <li>Embed mental health into climate adaptation and disaster response planning</li>
+                        <li>Strengthen substance misuse surveillance in displaced populations</li>
+                    </ol>
+                </article>
+
+                <article id="evidence">
+                    <h3>Evidence confidence</h3>
+                    <ul>
+                        <li>Strong consensus on community-based approaches</li>
+                        <li>Weaker evidence base for substance misuse interventions, indicating a research priority</li>
+                    </ul>
+                </article>
+
+                <h3>At a glance</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Domains</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Climate drivers</td>
+                            <td>Drought, flooding, conflict-climate interaction</td>
+                        </tr>
+                        <tr>
+                            <td>Populations at risk</td>
+                            <td>IDPs - women, adolescents, pastoralists</td>
+                        </tr>
+                        <tr>
+                            <td>Strongest evidence</td>
+                            <td>Community-based psychosocial support</td>
+                        </tr>
+                        <tr>
+                            <td>Evidence gaps</td>
+                            <td>Long-term outcomes, substance misuse interventions</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <hr>
+
+                <article id="background">
+                    <h3>Background</h3>
+                    <p class="sources-count">(4 sources)</p>
+
+                    <details>
+                        <summary>
+                            Ethiopia's pastoralists occupy 61% of the country's land mass, with about 10 million people
+                            relying on
+                            livestock-based livelihoods in lowland areas. This traditional system faces mounting
+                            pressures from climate
+                            change, resource competition and land degradation which threatens its future viability and
+                            is
+                            leading to
+                            large-scale migration.
+                        </summary>
+
+                        <p>Pastoralism in Ethiopia represents both a cultural heritage and essential livelihood system
+                            that spans vast
+                            rangelands across the country. Pastoral communities occupy 61% of Ethiopia's total land
+                            mass,
+                            with 97% of
+                            Ethiopian pastoralists concentrated in lowland areas of Afar, Somali, Oromiya, and SNNPR
+                            regions. About 10
+                            million pastoralists depend on livestock based livelihoods as their primary source of wealth
+                            and subsistence.
+                        </p>
+
+                        <p>This traditional lifestyle faces significant challenges that threaten its sustainability.
+                            Ethiopian
+                            pastoralists now operate over increasingly degraded rangelands suffering from bush
+                            encroachment, with
+                            shrinking grazing areas due to population growth, agricultural expansion, land degradation,
+                            blocked migration
+                            routes, and resource-based conflicts. These communities face frequent droughts with high
+                            livestock mortality
+                            that often threatens the viability of pastoral livelihoods and leads to famine. Additional
+                            pressures include
+                            competition for water and pasture, underrepresentation in socio-economic and political
+                            activities, ethnic
+                            conflicts, and poverty.</p>
+
+                        <p>The scale of climate-induced displacement among Ethiopian pastoralists has become severe,
+                            with
+                            communities
+                            experiencing catastrophic losses that force large-scale migration. Migration patterns have
+                            fundamentally
+                            changed as climate pressures intensify. The increase in frequency and length of drought
+                            cycles in Ethiopia
+                            have forced herders to move more frequently, often to new destinations for extended periods.
+                            However,
+                            pastoralist migration faces unique challenges in terms of recognition and protection. Unlike
+                            certain
+                            categories of migrants, pastoralist migration has not been formally recognised or protected,
+                            and
+                            administration borders are being drawn without considering pastoralist mobility needs,
+                            leading
+                            to
+                            inter-communal tensions, insecurity and conflict.</p>
+
+                        <p><em>Ethiopia has 2.4m internally displaced people as of end of 2024.</em></p>
+                    </details>
+                </article>
+
+                <article>
+                    <h3>Prevalence of Mental Health & Substance Misuse Problems</h3>
+                    <p class="sources-count">(3 sources)</p>
+
+                    <details>
+                        <summary>Displaced communities in Ethiopia face high rates of mental health problems, including
+                            post-traumatic
+                            stress disorder, anxiety, and depression. These mental health problems are often the result
+                            of conflict-related trauma and harsh living conditions in settlement camps. Substance misuse
+                            is also rising among
+                            Ethiopian populations, with significant regional differences in prevalence.</summary>
+
+                        <p>Ethiopia faces a severe displacement crisis, with over three million internally displaced
+                            persons (IDPs) due
+                            to political conflicts (often relating to climate change), making it the third largest
+                            internal displacement
+                            situation globally.</p>
+
+                        <p>The mental health burden is particularly acute in the Oromia region, due to displacement.
+                            Displaced
+                            individuals living in settlement camps experience the highest burden of mental health
+                            problems, often stemming
+                            from the initial trauma of conflict (with many having witnessed the killing of relatives or
+                            lost family
+                            members entirely) or the ongoing stressful living conditions in displacement settings. The
+                            most prevalent
+                            mental health conditions among displaced populations include post-traumatic stress disorder,
+                            anxiety,
+                            depression, and psychosis; with cases concentrated in camps around Sululta and Bishan
+                            Guracha.
+                        </p>
+
+                        <p>Substance use presents as an additional challenge, with notable research showing that
+                            approximately 62% of
+                            Ethiopian university students use at least one substance, most commonly alcohol. Khat
+                            chewing
+                            affected roughly
+                            23% of Ethiopian university students, with the highest use in Oromia region at 32%.
+                            Depression significantly
+                            increases the likelihood of substance use by approximately three times.</p>
+
+                        <p>Cultural responses to mental health problems among displacement populations often involve
+                            traditional and
+                            religious approaches, with many associating mental illness with evil spirit possession or
+                            divine punishment
+                            for sins.</p>
+                    </details>
+                </article>
+
+                <article>
+                    <h3>Interventions Used in Ethiopia and Similar Contexts</h3>
+                    <p class="sources-count">(6 sources)</p>
+
+                    <details>
+                        <summary>Evidence-based interventions for displaced populations include cash transfer programs,
+                            screening and
+                            brief intervention systems, integrated mental health and substance use services, and
+                            culturally adapted
+                            trauma-informed approaches. These interventions emphasise community engagement, peer
+                            support,
+                            and multi-tiered
+                            prevention strategies that address both immediate needs and underlying trauma.</summary>
+
+                        <p>Research supports several key approaches for addressing mental health and substance misuse in
+                            displaced
+                            populations. Some examples include:</p>
+
+                        <ol>
+                            <li><strong>Ethiopia's Productive Safety Net Programme</strong> provides cash transfers to
+                                reduce food
+                                insecurity from droughts and supported community relocation to safer areas where their
+                                lives and health are
+                                not threatened by climate disasters. These safety net programs address fundamental
+                                stressors that contribute
+                                to mental health deterioration in displaced populations. Such programs can help prevent
+                                the acute
+                                psychological trauma associated with sudden displacement while ensuring basic needs are
+                                met during
+                                transition.</li>
+
+                            <li><strong>Screening, Brief Intervention and Referral to Treatment (SBIRT)</strong> systems
+                                provide an
+                                evidence-based framework that can effectively reduce unhealthy alcohol and drug use
+                                while
+                                addressing
+                                co-occurring mental health problems. These approaches should be integrated into routine
+                                clinical practice
+                                alongside brief motivational conversations, psychosocial support, and
+                                medication-assisted
+                                therapies for
+                                substance use dependence and withdrawal.</li>
+
+                            <li><strong>Community-Based Care</strong> represents a critical approach for narrowing
+                                mental
+                                health and
+                                substance use treatment gaps in African contexts, with models classified into
+                                psychotherapeutic, social,
+                                lifestyle/physical health, economic, and psychopharmacological approaches. These
+                                interventions must address
+                                context-specific needs while adopting adaptable, scalable, and holistic approaches, with
+                                common
+                                recommendations including partnering with local organisations, implementing regular
+                                suicide prevention
+                                efforts, and customising digital tools to community needs.</li>
+                        </ol>
+                    </details>
+                </article>
+
+                <article>
+                    <h3>Intervention Delivery</h3>
+                    <p class="sources-count">(3 sources)</p>
+
+                    <details>
+                        <summary>Successful implementation of interventions requires multi-dimensional approaches with
+                            committed
+                            leadership, stakeholder buy-in, and adequate supervision, while addressing structural
+                            barriers through
+                            interdisciplinary coordination and community partnerships. Key challenges include ensuring
+                            local
+                            acceptability, managing resource constraints, and integrating services across humanitarian
+                            sectors.</summary>
+
+                        <p>Implementing mental health and substance misuse interventions in displaced populations
+                            requires
+                            multi-dimensional approaches that address the complex nature of these interconnected
+                            problems. Ethiopia's
+                            experience demonstrates that successful implementation depends on committed leadership by
+                            policymakers,
+                            stakeholder buy-in from critical partners, and calibrated integration that enables task
+                            sharing across
+                            different levels of healthcare providers.</p>
+
+                        <p>Essential implementation factors include provision of adequate supervision and mentorship to
+                            ensure proper
+                            skills acquisition, program monitoring systems, and mobilisation of adequate financial and
+                            human resources to
+                            ensure quality and sustainability of interventions.</p>
+
+                        <p>Context-specific adaptation represents a critical implementation challenge, requiring
+                            interventions that are
+                            feasible, relevant, and acceptable in local settings. Structural and systemic barriers pose
+                            significant
+                            implementation challenges that require coordinated responses across multiple sectors.
+                            Programs
+                            must address
+                            underlying causes including psychological trauma, exposure to potentially traumatic events,
+                            and difficulties
+                            meeting basic needs, which requires interdisciplinary coordination between humanitarian aid
+                            sectors.</p>
+
+                        <p>Incorporating livelihood and recreational programming into substance use services
+                            necessitates
+                            collaboration
+                            between health sectors and economic development programs. Implementation strategies must
+                            ensure security and
+                            confidentiality for both implementers and participants while integrating local community
+                            leaders and
+                            traditional healing practices.</p>
+
+                        <p>Service integration offers both opportunities and challenges for implementation, with
+                            potential
+                            to reduce
+                            structural stigma and increase service scope when substance misuse treatment is integrated
+                            into existing
+                            health systems like primary care or mental health services.</p>
+                    </details>
+                </article>
+
+                <article>
+                    <h3>Core Approaches - Recommendations for Decision Makers</h3>
+                    <p class="sources-count">(x sources)</p>
+
+                    <details>
+                        <summary>Evidence-based interventions addressing poor mental health and substance misuse among
+                            climate-displaced
+                            populations in Ethiopia span several domains including psychosocial support, community-based
+                            care, substance
+                            use treatment, and integration with climate adaption.</summary>
+
+                        <p>Core approaches for addressing poor mental health and substance misuse in displaced
+                            communities in Ethiopia
+                            include:</p>
+
+                        <ol>
+                            <li>Psychosocial support interventions in internally displaced communities, including
+                                individual, group and
+                                school-based programs.</li>
+                            <li>Community-based care and resilience approaches, such as community outreach and peer
+                                support.</li>
+                            <li>Integrated mental health and substance misuse services.</li>
+                            <li>Holistic approaches which integrate mental health with climate adaptation and
+                                resilience.
+                            </li>
+                            <li>Region-specific tailored approaches to reflect local needs.</li>
+                        </ol>
+                    </details>
+                </article>
+
+                <hr>
+
+                <article>
+                    <h3>Summary</h3>
+                    <p>Ethiopia's pastoralists are facing increasing pressure from climate change resource competition
+                        and land
+                        degradation, leading to conflicts and large scale displacement. Conflict-related displacement
+                        has
+                        led to high
+                        rates of mental health and substance misuse problems among this vulnerable population.
+                        Ethiopia's
+                        response to
+                        climate-driven internal displacement increasingly recognises that mental health and psychosocial
+                        support are
+                        integral to recovery and resilience. Evidence-based interventions for displaced populations
+                        include cash
+                        transfer programs, screening and brief intervention systems, integrated mental health and
+                        substance use
+                        services, and culturally adapted trauma-informed approaches. Successful implementation of
+                        interventions requires
+                        multi-dimensional approaches with committed leadership, stakeholder buy-in, and adequate
+                        supervision, while
+                        addressing structural barriers through interdisciplinary coordination and community
+                        partnerships.
+                    </p>
+                </article>
+
+                <article>
+                    <h3>Have you also considered…</h3>
+                    <ul>
+                        <li>How do social networks and community cohesion influence the success of mental health
+                            interventions in
+                            vulnerable populations?</li>
+                        <li>What are the impacts of global heat waves and floods on the prevalence of mental health
+                            conditions?</li>
+                        <li>What are key challenges faced by displaced communities in maintaining access to health and
+                            sanitation
+                            services, and how can local institutions help to address these?</li>
+                        <li>What disparities exist in mental health service access between urban and rural Ethiopia?
+                        </li>
+                    </ul>
+                </article>
+
+                <hr>
+
+                <article id="citations">
+                    <h3>16 Unique Sources Cited in This Report</h3>
+
+                    <details>
+                        <summary>View all citations</summary>
+
+                        <ol>
+                            <li>Beyene, S A., Garoma, S. & Belachew (2024). <strong>Bridging disparity in knowledge and
+                                    utilization of
+                                    contraceptive methods among married couples in the pastoralist community of Fentale
+                                    District, Eastern
+                                    Ethiopia.</strong> <em>PLOS One.</em> <a
+                                    href="https://doi.org/10.1371/journal.pone.0309703">https://doi.org/10.1371/journal.pone.0309703</a>
+                            </li>
+
+                            <li>Mohamed, A A. (2019). <strong>Pastoralism and development policy in Ethiopia: A review
+                                    study.</strong>
+                                <em>Budapest International Research and Critics Institute - Journal.</em> <a
+                                    href="https://doi.org/10.33258/birci.v2i4.562">https://doi.org/10.33258/birci.v2i4.562</a>
+                            </li>
+
+                            <li>Ayele, T., Dedecha, S. & Duba, D. (2020). <strong>The impact of climate change on
+                                    pastoralist livelihoods
+                                    in Ethiopia: A review.</strong> <em>Journal of Resources Development and
+                                    Management.</em> <a
+                                    href="https://doi.org/10.7176/JRDM/63-02">https://doi.org/10.7176/JRDM/63-02</a>
+                            </li>
+
+                            <li>Yitbarek et al. (2021). [Citation details from document]</li>
+
+                            <li>Tesfaye et al. (2014). [Citation details from document]</li>
+
+                            <li>Gebrie et al. (2018). [Citation details from document]</li>
+
+                            <li>Pega et al. (2015). [Citation details from document]</li>
+
+                            <li>Kane et al. (2023). [Citation details from document]</li>
+
+                            <li>Horyniak et al. (2016). [Citation details from document]</li>
+
+                            <li>Dua et al. (2011). [Citation details from document]</li>
+
+                            <li>Raeber et al. (2024). [Citation details from document]</li>
+
+                            <li>Luberenga et al. (2025). [Citation details from document]</li>
+
+                            <li>Gebremedhin et al. (2021). [Citation details from document]</li>
+
+                            <li>Haddad et al. (2023). [Citation details from document]</li>
+
+                            <li>Greene et al. (2018). [Citation details from document]</li>
+
+                            <li>Chinasho et al. (2017). [Citation details from document]</li>
+                        </ol>
+                    </details>
+                </article>
+
+                <article>
+                    <h3>Methods</h3>
+                    <p><em>Brief overview of the steps undertaken to produce the output – link to Solace-AI website
+                            which
+                            will include
+                            a more detailed technical overview of the methods of the system.</em></p>
+                </article>
+
+                <footer>
+                    <p><small>Evidence report generated by Solace-AI | <a href="#">Find out more</a></small></p>
+                </footer>
+            </div>
+        </main>
+    </div>
+
+    <button id="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" aria-label="Back to top">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+        </svg>
+    </button>
+
+    <script>
+        // Back to top button
+        const backToTopButton = document.getElementById('back-to-top');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                backToTopButton.style.display = 'flex';
+            } else {
+                backToTopButton.style.display = 'none';
+            }
+        });
+
+        // Sidebar toggle functionality
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const sidebar = document.getElementById('sidebar-nav');
+        const closeBtn = sidebar.querySelector('.nav-header .close-btn');
+        const body = document.body;
+
+        function openSidebar() {
+            sidebar.classList.add('is-open-on-mobile');
+            body.classList.add('sidebar-open');
+        }
+
+        function closeSidebar() {
+            sidebar.classList.remove('is-open-on-mobile');
+            body.classList.remove('sidebar-open');
+        }
+
+        if (mobileMenuToggle) {
+            mobileMenuToggle.addEventListener('click', (e) => {
+                e.preventDefault();
+                openSidebar();
+            });
+        }
+
+        closeBtn.addEventListener('click', closeSidebar);
+
+        // Close sidebar when clicking overlay (mobile)
+        body.addEventListener('click', (e) => {
+            if (body.classList.contains('sidebar-open') &&
+                !sidebar.contains(e.target) &&
+                !mobileMenuToggle.contains(e.target)) {
+                closeSidebar();
+            }
+        });
+
+        // Close sidebar when clicking a link (mobile)
+        const sidebarLinks = sidebar.querySelectorAll('a');
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth < 1024) {
+                    closeSidebar();
+                }
+            });
+        });
+
+        // Highlight active section in sidebar
+        function updateActiveLink() {
+            const sections = ['top', 'recommendations', 'evidence', 'background', 'citations'];
+            let currentSection = 'top';
+
+            sections.forEach(sectionId => {
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    const rect = section.getBoundingClientRect();
+                    if (rect.top <= 100 && rect.bottom >= 100) {
+                        currentSection = sectionId;
+                    }
+                }
+            });
+
+            sidebarLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href === '#' + currentSection) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveLink);
+    </script>
+</body>
+
+</html>
