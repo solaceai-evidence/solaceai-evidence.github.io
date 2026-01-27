@@ -23,7 +23,8 @@
         h3,
         h4,
         h5,
-        h6 {
+        h6,
+        nav {
             font-family: 'Inter', sans-serif;
         }
 
@@ -311,9 +312,17 @@
 <body>
     <!-- Top Logo Header (not sticky) -->
     <header class="top-header">
-        <div class="container-fluid">
-            <img src="img/solacelogo.svg" alt="Solace-AI" style="height: 60px;">
-        </div>
+        <nav>
+            <ul>
+                <div class="container-fluid">
+                    <img src="https://solaceai.org/img/solacelogo.svg" alt="Solace-AI" style="height: 60px;">
+                </div>
+            </ul>
+
+            <ul>
+                <li><button onclick="downloadHTML()">Download report</button></li>
+            </ul>
+        </nav>
     </header>
 
     <!-- Sticky Navigation Breadcrumb (mobile only) -->
@@ -350,6 +359,7 @@
                     <li><a href="#evidence">Evidence</a></li>
                     <li><a href="#background">Background</a></li>
                     <li><a href="#citations">Citations</a></li>
+
                 </ul>
             </nav>
         </aside>
@@ -889,6 +899,25 @@
         }
 
         window.addEventListener('scroll', updateActiveLink);
+
+        function downloadHTML() {
+            // Get the entire HTML of the page
+            const htmlContent = document.documentElement.outerHTML;
+
+            // Create a Blob with the HTML content
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+
+            // Create a temporary download link
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'solaceai_evidence_report.html';
+
+            // Trigger the download
+            link.click();
+
+            // Clean up
+            URL.revokeObjectURL(link.href);
+        }
     </script>
 </body>
 
