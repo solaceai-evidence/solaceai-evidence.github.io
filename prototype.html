@@ -5,16 +5,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Newsreader:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.colors.min.css">
     <title>Solace-AI - Ethiopia Climate Displacement Evidence Report</title>
     <style>
         :root {
-            --pico-font-family: 'Newsreader', serif;
+            --pico-font-family: 'Inter', serif;
             --sidebar-width: 280px;
         }
 
@@ -34,7 +33,8 @@
 
         details summary {
             line-height: 1.5rem;
-            font-weight: 600;
+            font-weight: 500;
+            font-style: italic;
         }
 
         .sources-count {
@@ -384,7 +384,7 @@
                     </ul>
                 </article>
 
-                <article id="recommendations">
+                <!-- <article id="recommendations">
                     <h3>Recommendations for decision-makers</h3>
                     <ol>
                         <li>Scale community-based psychosocial support in displacement settings</li>
@@ -392,17 +392,54 @@
                         <li>Embed mental health into climate adaptation and disaster response planning</li>
                         <li>Strengthen substance misuse surveillance in displaced populations</li>
                     </ol>
-                </article>
+                </article> -->
+
+                
+                
+<article>
+    <h3>About this report</h3>
+    <p>This report synthesises research on mental health and substance misuse interventions for climate-displaced communities in Ethiopia. We searched PubMed, WHO policy reports, and CDC policy reports on <strong>29 January 2026</strong>.</p>
+    <p>We included <strong>16 studies</strong> comprising systematic reviews, cohort studies, cross-sectional surveys, and policy evaluations.</p>
+</article>
 
                 <article id="evidence">
-                    <h3>Evidence confidence</h3>
-                    <ul>
-                        <li>Strong consensus on community-based approaches</li>
-                        <li>Weaker evidence base for substance misuse interventions, indicating a research priority</li>
-                    </ul>
-                </article>
-
-                <h3>At a glance</h3>
+                    
+                
+<h3>Evidence-based recommendations</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Evidence strength</th>
+            <th>Intervention / Recommendation</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td rowspan="3" class="pico-color-lime-300"><strong>✓ Strong evidence</strong></td>
+            <td>Scale community-based psychosocial support in displacement settings</td>
+        </tr>
+        <tr>
+            <td>Invest in task-shifting models using trained lay providers</td>
+        </tr>
+        <tr>
+            <td>Embed mental health into climate adaptation and disaster response planning</td>
+        </tr>
+        <tr>
+            <td class="pico-color-pumpkin-300"   ><strong>◐ Weak evidence</strong></td>
+            <td>Strengthen substance misuse surveillance in displaced populations</td>
+        </tr>
+        <tr>
+            <td class="pico-color-slate-500" ><strong>? Uncertain</strong></td>
+            <td class="pico-color-zinc-200">No interventions identified</td>
+        </tr>
+        <tr>
+            <td class="pico-color-red-550"><strong>✗ Likely harmful</strong></td>
+            <td class="pico-color-zinc-200">No interventions identified</td>
+        </tr>
+    </tbody>
+</table>
+</article>
+                <!-- <h3>At a glance</h3>
                 <table>
                     <thead>
                         <tr>
@@ -430,7 +467,7 @@
                     </tbody>
                 </table>
 
-                <hr>
+                <hr> -->
 
                 <article id="background">
                     <h3>Background</h3>
@@ -902,8 +939,26 @@
         window.addEventListener('scroll', updateActiveLink);
 
         function downloadHTML() {
-            // Get the entire HTML of the page
-            const htmlContent = document.documentElement.outerHTML;
+            // Clone the entire document
+            const clonedDoc = document.documentElement.cloneNode(true);
+
+            // Find the button's parent <li> in the cloned document
+            const buttonLi = clonedDoc.querySelector('header.top-header nav ul:last-child li');
+
+            if (buttonLi) {
+                // Create the date string
+                const downloadDate = new Date().toLocaleDateString('en-GB', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                });
+
+                // Replace the button with the offline message
+                buttonLi.innerHTML = `<span style="font-size: 0.9rem; color: var(--pico-muted-color);">Offline download - ${downloadDate}</span>`;
+            }
+
+            // Get the HTML content from the cloned document
+            const htmlContent = clonedDoc.outerHTML;
 
             // Create a Blob with the HTML content
             const blob = new Blob([htmlContent], { type: 'text/html' });
