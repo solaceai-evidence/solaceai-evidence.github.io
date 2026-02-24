@@ -1,0 +1,949 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.colors.min.css">
+    <title>Solace-AI - Cholera Vacinnation</title>
+    <style>
+        :root {
+            --pico-font-family: 'Inter', serif;
+            --sidebar-width: 280px;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        nav {
+            font-family: 'Inter', sans-serif;
+        }
+
+        details {
+            margin-bottom: 1rem;
+        }
+
+        details summary {
+            line-height: 1.5rem;
+            font-weight: 600;
+        }
+
+        .sources-count {
+            font-size: 0.875rem;
+            color: var(--pico-muted-color);
+            font-style: italic;
+        }
+
+        /* Top logo header - not sticky */
+        body>header.top-header {
+            padding: 1rem;
+            border-bottom: 1px solid var(--pico-muted-border-color);
+        }
+
+        body>header.top-header .container-fluid {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        body>header.top-header img {
+            height: 32px;
+            width: auto;
+        }
+
+        /* Sticky navigation breadcrumb */
+        nav.sticky-nav {
+            position: sticky;
+            top: -1px;
+            z-index: 10;
+            background-color: var(--pico-background-color);
+            border-bottom: 1px solid var(--pico-muted-border-color);
+            padding: 0.75rem 1rem;
+        }
+
+        nav.sticky-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        nav.sticky-nav li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        nav.sticky-nav .nav-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.5rem;
+            background: none;
+            border: none;
+            color: var(--pico-color);
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 1rem;
+            border-radius: var(--pico-border-radius);
+            transition: background-color var(--pico-transition);
+        }
+
+        nav.sticky-nav .nav-toggle:hover {
+            background-color: var(--pico-secondary-hover-background);
+        }
+
+        nav.sticky-nav .nav-toggle svg {
+            width: 20px;
+            height: 20px;
+            stroke-width: 2;
+        }
+
+        nav.sticky-nav .separator {
+            color: var(--pico-muted-color);
+            font-weight: 300;
+        }
+
+        /* Layout with sidebar */
+        body {
+            margin: 0;
+        }
+
+        .page-container {
+            display: grid;
+            grid-template-columns: var(--sidebar-width) 1fr;
+            min-height: calc(100vh - 73px);
+        }
+
+        /* Sidebar Navigation */
+        aside#sidebar-nav {
+            border-right: 1px solid var(--pico-muted-border-color);
+            overflow-y: auto;
+            background-color: var(--pico-background-color);
+            display: flex;
+            flex-direction: column;
+        }
+
+        aside#sidebar-nav nav {
+            position: sticky;
+            top: 0;
+            background-color: var(--pico-background-color);
+            padding: 1.5rem;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        aside#sidebar-nav nav .nav-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--pico-muted-border-color);
+        }
+
+        aside#sidebar-nav nav .nav-header h2 {
+            margin: 0;
+            font-size: 1.25rem;
+        }
+
+        aside#sidebar-nav nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        aside#sidebar-nav nav li {
+            margin: 0.25rem 0;
+        } */
+
+        /* aside#sidebar-nav nav a {
+            display: block;
+            padding: 0.5rem 0.75rem;
+            border-radius: var(--pico-border-radius);
+            text-decoration: none;
+            color: var(--pico-color);
+            transition: background-color var(--pico-transition);
+        }
+
+        aside#sidebar-nav nav a:hover {
+            background-color: var(--pico-secondary-hover-background);
+        }
+
+        aside#sidebar-nav nav a.active {
+            background-color: var(--pico-primary-background);
+            color: var(--pico-primary-inverse);
+        }
+
+        /* Close button (mobile only) */
+        aside#sidebar-nav .close-btn {
+            display: none;
+            padding: 0.5rem;
+            margin: 0;
+            background: none;
+            border: none;
+            opacity: 0.7;
+            transition: opacity var(--pico-transition);
+            cursor: pointer;
+        }
+
+        aside#sidebar-nav .close-btn:hover {
+            opacity: 1;
+        }
+
+        aside#sidebar-nav .close-btn svg {
+            width: 1.25rem;
+            height: 1.25rem;
+            display: block;
+        }
+
+        /* Main content area */
+        main.content-area {
+            overflow-x: hidden;
+        }
+
+        main.content-area>.container {
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+
+        /* Back to Top */
+        #back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 100;
+            display: none;
+            border-radius: 50%;
+            padding: 0;
+            width: 3rem;
+            height: 3rem;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        #back-to-top svg {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+
+        /* Mobile styles (below 1024px) */
+        @media (max-width: 1023px) {
+            .page-container {
+                grid-template-columns: 1fr;
+            }
+
+            aside#sidebar-nav {
+                position: fixed;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                width: 85%;
+                max-width: 320px;
+                z-index: 1000;
+                transform: translateX(-100%);
+                transition: transform 0.2s ease-in-out;
+                box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            }
+
+            aside#sidebar-nav.is-open-on-mobile {
+                transform: translateX(0);
+            }
+
+            aside#sidebar-nav .close-btn {
+                display: block;
+            }
+
+            aside#sidebar-nav nav .nav-header {
+                display: flex;
+            }
+
+            /* Overlay when sidebar is open */
+            body::before {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 999;
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+            }
+
+            body.sidebar-open::before {
+                opacity: 1;
+                visibility: visible;
+            }
+
+            /* Prevent scrolling when sidebar is open */
+            body.sidebar-open {
+                overflow: hidden;
+            }
+        }
+
+        /* Desktop: hide close button and nav header */
+        @media (min-width: 1024px) {
+            aside#sidebar-nav nav .nav-header {
+                display: none;
+            }
+
+            nav.sticky-nav {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Top Logo Header (not sticky) -->
+    <header class="top-header">
+        <nav>
+            <ul>
+                <div class="container-fluid">
+                    <img src="https://solaceai.org/img/solacelogo.svg" alt="Solace-AI" style="height: 60px;">
+                </div>
+            </ul>
+
+            <ul>
+                <li><button onclick="downloadHTML()">Download report</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Sticky Navigation Breadcrumb (mobile only) -->
+    <nav class="sticky-nav">
+        <ul>
+            <li>
+                <a href="#" class="nav-toggle" id="mobile-menu-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </a>
+            </li>
+            <!-- <li class="separator">›</li> -->
+            <li>Prioritising Cholera Vaccinations During Outbreaks</li>
+        </ul>
+    </nav>
+
+    <div class="page-container">
+        <!-- Sidebar Navigation -->
+        <aside id="sidebar-nav">
+            <nav>
+                <div class="nav-header">
+                    <h2>Navigation</h2>
+                    <button class="close-btn" aria-label="Close menu">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <ul>
+                    <li><a href="#top" class="active">Home</a></li>
+                    
+                <details name="Overview">
+                    <summary>Overview</summary> 
+                    <ul>
+                        <li><a href="#about this report">About</a></li>
+                        <li><a href="#why this matters">Importance</a></li>
+                        <li><a href="#recommendations">Recommendations</a></li>
+                </ul>
+            </details>
+                  
+            <details name="Full Report">
+            <summary>Full Report</summary>
+            <ul>
+                    <li><a href="#background">Background</a></li>
+                    <li><a href="#targeting">Targeting Strategies</a></li>
+                    <li><a href="#timing considerations">Timing Considerations</a></li>
+                    <li><a href="#strategy decisions">Strategy Decisions</a></li>
+                    <li><a href="#summary">Summary</a></li>
+                </ul>
+                </details>
+
+                    <li><a href="#citations" class="">Evidence Sources</a></li>
+                    <li><a href="#Have you considered" class="">Other Relevant Topics</a></li>
+                    <li><a href="#Methods" class="">Methods</a></li>
+                    <li><a href="#Figures" class="">Relevant Figures</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="content-area" id="top">
+            <div class="container">
+
+                <h2>Prioritising Cholera Vaccinations During Outbreaks</h2>
+
+                <hr>
+                <em>World Health Organization - Impacts of Climate Change on Human Health:</em>
+                <p>
+                 <div style="
+                    display: inline-block;
+                    background-color: #38bdf8;
+                    color: white;
+                    padding: 16px 28px;
+                    border-radius: 12px;
+                    font-size: 1rem;
+                    font-weight: 600;
+                    margin: 8px;
+                        ">Water quality impacts</div>
+                        </p>
+                <hr>
+
+                <p><h4><u>Overview</u></h4></p>
+
+                 <article id="about this report">
+                    <h3>About this report</h3>
+                    <p>This report synthesises evidence on prioritsing vaccinations during Cholera outbreaks. We searched Semantic Scholar, PubMed, WHO policy reports, and CDC policy 
+                        reports on <strong>9 February 2026</strong>.</p>
+                    <p>We included <strong>25 evidence sources</strong> comprising systematic reviews, cohort studies, cross-sectional surveys, and policy evaluations.</p>
+                </article>
+
+                <article id="why this matters">
+                    <h3>Why this matters</h3>
+                    <ul>
+                        <li>Global cholera cases are increasing rapidly which has impacted on global supply of vaccinations</li>
+                        <li>The global supply crisis has fundamentally shaped vaccination prioritisation</li>
+                        <li>Cholera vaccination during outbreaks should target high-risk populations first, focus on areas with active transmission, and use a systematic approach that considers disease spread patterns and population vulnerability</li>
+                    </ul>
+                </article>
+
+                <article id="evidence">
+                <h3>Evidence-based recommendations</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Evidence strength</th>
+                            <th>Intervention / Recommendation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td rowspan="4" class="pico-color-lime-300"><strong>✓ Strong evidence</strong></td>
+                            <td>Pre-emptive vaccination strategies</td>
+                        </tr>
+                        <tr>
+                            <td>Geographic and population-level targeting</td>
+                        </tr>
+                        <tr>
+                            <td>Single-dose approach for reactive strategies</td>
+                        </tr>
+                        <tr>
+                            <td>Ring vaccination within 100m of index case</td>
+                        </tr>
+
+                        <tr>
+                            <td class="pico-color-pumpkin-300"   ><strong>◐ Weak evidence</strong></td>
+                            <td class="pico-color-zinc-200">No interventions identified</td>
+                        </tr>
+                        <tr>
+                            <td class="pico-color-slate-500" ><strong>? Uncertain</strong></td>
+                            <td class="pico-color-zinc-200">No interventions identified</td>
+                        </tr>
+                        <tr>
+                            <td class="pico-color-red-550"><strong>✗ Likely harmful</strong></td>
+                            <td class="pico-color-zinc-200">No interventions identified</td>
+                        </tr>
+                    </tbody>
+                </table>
+                </article>
+                
+                <hr>
+
+                <p><h4><u>Full Report</u></h4>
+
+                <article id="background">
+                    <h3>Background</h3>
+                    <p class="sources-count">(6 sources)</p>
+
+                    <details>
+                        <summary>
+                        Cholera remains a major global health threat with an estimated 2.9 million cases and 95,000 deaths annually, primarily affecting Sub-Saharan Africa and regions 
+                        with poor sanitation infrastructure. Cholera vaccination during outbreaks should target high-risk populations first, focus on areas with active transmission, and 
+                        use a systematic approach that considers disease spread patterns and population vulnerability. 
+                        </summary>
+
+                        <p>Despite being preventable and treatable, cholera continues to impose a substantial global health burden, with estimates indicating approximately 2.9 million 
+                            cases and up to 95,000 deaths occurring annually worldwide
+                                <a href="https://www.semanticscholar.org/reader/32b902c14d78ff29a3c1bf44ae05496bae8be783">(Ali et al, 2015).</a> 
+                            The global distribution of cholera burden is highly unequal, with approximately 1.3 billion people living at risk in endemic countries, and Sub-Saharan 
+                            Africa bearing the majority of this burden 
+                                <a href="https://www.semanticscholar.org/reader/32b902c14d78ff29a3c1bf44ae05496bae8be783">(Ali et al, 2015).</a> 
+                            Recent years have witnessed some of the most severe outbreaks in recorded history, with 2017 marking a particularly devastating year due to major outbreaks 
+                            in Yemen, the Democratic Republic of Congo, Nigeria, Somalia and South Sudan 
+                                <a href="https://www.semanticscholar.org/reader/7ca37d2da3cb6b20960e8fa00774261e05f4521a">(White et al, 2022).</a>
+                            </p>
+
+                        <p>Global cholera cases more than doubled from 2021, with over 600,000 cases and roughly 7,600 deaths reported in 2024 alone across 33 countries 
+                                <a href="https://www.who.int/news/item/12-09-2025-cholera-kills-more-people-for-second-consecutive-year-while-prevention-and-treatment-available">(WHO, 2025).</a>
+                            In October 2024, the global stockpile of oral cholera vaccine (OCV) ran completely dry 
+                                <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11932455/">(Houston & Houston, 2025).</a>
+                            Supply has since recovered substantially. Annual production reached approximately 70 million doses in 2025, up from 35 million in 2022 
+                                <a href="https://www.who.int/news/item/04-02-2026-preventive-cholera-vaccination-resumes-as-global-supply-reaches-critical-milestone">(WHO, 2026).</a>
+                        </p>
+
+                        <p> OCV in outbreaks is most effective when it is geographically targeted to where transmission risk is highest (e.g., displaced populations, dense informal settlements, 
+                            flood-affected communities) and delivered fast enough to reduce onward spread, while not diverting resources from the core pillars of cholera control: case management 
+                            (rapid rehydration), safe water/sanitation, and risk communication 
+                                <a href="https://list.essentialmeds.org/files/decisions/bTLGqWYSe4O7IsZrlePTHFRdO1nS8qRHkHoqaiuQ.pdf">(WHO, 2017).</a>
+                        </p>
+                    </details>
+                </article>
+
+                <article id="targeting">
+                    <h3>Geographic and Population-Level Targeting Strategies</h3>
+                    <p class="sources-count">(10 sources)</p>
+
+                    <details>
+                        <summary>Geographic targeting should focus on areas with high attack rates and active transmission, using surveillance data to map hotspots. Population-level 
+                            targeting should prioritise children aged 1-14 years, the elderly, pregnant women and displaced communities as they are most at-risk. Innovative ring vaccination 
+                            approaches targeting households within 70-100 metres of cases can achieve high effectiveness. </summary>
+
+                        <p>Effective prioritisation rests on 1. geographic targeting of hotspots, and 2. population-level risk stratification within those hotspots. Geographic targeting 
+                            strategies rely heavily on surveillance data to identify high-risk areas for vaccination campaigns. </p>
+
+                        <p>Population-level prioritisation, when vaccine supply is constrained, follows a risk hierarchy informed by age, health status, and living conditions. The highest priority groups include:
+                            <ul>
+                                <li><strong>Children aged 1-5 years</strong>,
+                                 who face the highest cholera mortality rates globally and for whom single-dose protection wanes most rapidly, with vaccine effectiveness dropping to roughly 33% by year three 
+                                versus sustained protection in older individuals 
+                                    <a href="https://www.sciencedirect.com/science/article/pii/S1473309923007429">(Malembaka et al, 2024).</a>
+                                However, limiting vaccination to children aged 1-5 years can be less effectives because vaccine efficiency is lower among young children, therefore evidence suggests the optimal 
+                                strategy is to prioritise older children (5-14 years), irrespective of setting and level of vaccination
+                                    <a href="https://pubmed.ncbi.nlm.nih.gov/35442958/">(Leung et al, 2021).</a>
+                                </li>
+                                <li><strong>Displaced populations in refugee and IDP camps</strong>,
+                                    where attack rates of 1-5% are common and WASH infrastructure is often lacking or absent
+                                        <a href="https://epidemics.ifrc.org/manager/disease/cholera">(IFRC, 2025).</a>
+                                </li>
+                                <li><strong>Urban slum dwellers</strong>,
+                                    particularly in peri-urban areas lacking sanitation infrastructure, where the WHO identifies <em>typical at-risk areas</em>
+                                    <a href="https://pubmed.ncbi.nlm.nih.gov/19762952/">(Talavera & Pérez, 2009).</a>
+                                </li>
+                                <li><strong>Pregnant women and immunocompromised individuals</strong> (including those with HIV), for whom OCV is safe and the risk-benefit ration strongly favours vaccination
+                                    <a href="https://www.choleraoutbreak.org/book-page/section-9-oral-cholera-vaccine.html">(Global Task Force on Cholera Control, 2026).</a>
+                                </li>
+                                <li><strong>Elderly populations over 65 years</strong> who exhibit case fatality rates 5-10 times higher than younger adults in historical data.
+                                </li>
+                            </ul>
+                        </p>
+
+                        <p>Ring vaccination strategies offer a promising targeted approach, particularly in urban settings. Since Cholera cases tend to cluster in time and place, particularly among household 
+                            contacts of a cholera case, ring vaccination around cases could be considered 
+                                <a href="https://www.semanticscholar.org/paper/Licensed-and-Recommended-Inactivated-Oral-From-to-Deen-Clemens/53644b97a9dcea99928e4126a3514796739310c4">(Deen & Clemens, 2021)</a>
+                                <a href="https://www.semanticscholar.org/reader/fe2d5997240934146fc7b25240cc5c3423745423">(Sugimoto et al, 2014).</a>
+                            Evidence shows that high-level protection can be achieved for those living close to cholera cases 
+                                <a href="https://www.semanticscholar.org/paper/Licensed-and-Recommended-Inactivated-Oral-From-to-Deen-Clemens/53644b97a9dcea99928e4126a3514796739310c4">(Deen & Clemens, 2021)</a>
+                                <a href="https://www.semanticscholar.org/reader/f59f0fd447c99847eb2e166f6337705891d5f8b9">(Ali et al, 2016).</a>
+                            Modelling studies demonstrate vaccinating people within 100m around index case households and improving their water source early in epidemics could reduce the number of cases by 82% 
+                            compared to uncontrolled epidemics 
+                                <a href="https://www.semanticscholar.org/paper/Licensed-and-Recommended-Inactivated-Oral-From-to-Deen-Clemens/53644b97a9dcea99928e4126a3514796739310c4">(Deen & Clemens, 2021)</a>
+                                <a href="https://www.semanticscholar.org/reader/292e16493d301c4edb56398d6c4dd7e5954d1aa2">(Finger et al, 2018)</a>
+                                <a href="https://www.semanticscholar.org/reader/ef7b82fdb2c71e4ac10363705fd40cbfdfebb373">(von Seidlein & Deen, 2018)</a>
+                        </p>
+                        </details>
+                </article>
+        
+                <article id="timing considerations">
+                    <h3>Timing Considerations and Campaign Intervention</h3>
+                    <p class="sources-count">(6 sources)</p>
+
+                    <details>
+                        <summary>Speed is critical as vaccinating early during outbreaks can prevent up to 40% of cases and reduce mortality, while delayed responses still provide benefits in prolonged outbreaks. 
+                            Pre-emptive vaccination before peak seasons or in high-risk periods offers best outcomes, but reactive campaigns remain valuable if implemented within the first few months.
+                        </summary>
+
+                        <p>The timing of cholera vaccination campaigns is crucial for maximising their impact, with rapid deployment being the most important factor for success. Delayed response can still provide 
+                            substantial benefits, particularly in prolonged outbreaks. If circumstances prevent a rapid response there are good reasons to roll out cholera mass vaccination campaigns well into the outbreak 
+                                <a href="https://www.semanticscholar.org/reader/4546f0fdab693184c32fca9a46d4e80e2f1a29f5">(Reyburn et al, 2011).</a>
+                            The key threshold appears to be implementation within the first few months, as reactive vaccination campaigns can be implemented within the first few months of an epidemic to maintain effectiveness 
+                                <a href="https://royalsocietypublishing.org/rsif/article/12/111/20150703/35616/Optimal-allocation-of-the-limited-oral-cholera">(Morre & Lessler, 2015).</a>
+                        </p>
+
+                        <p>Pre-emptive vaccination strategies offer the greatest potential impact by preventing outbreaks before they begin. Pre-emptive vaccination should be considered by local health authorities to help prevent 
+                            potential outbreaks or the spread of current outbreaks to new areas 
+                                <a href="https://www.semanticscholar.org/reader/259145346824ee885f8fae0bbbdb57fa95eb6705">(López-Gigosos et al, 2011).</a>
+                            This approach is particularly valuable when strategic timing of vaccination programmes, ideally preceding the expected cholera peak seasons, could significantly enhance control outcomes 
+                                <a href="https://www.semanticscholar.org/reader/90016b914d9587ea8efd90f5376239feaa4e5352">(Gyamfi, 2025).</a>
+                            In conflict settings, integrating vaccination strategies in emergency responses plans, ideally before the projected outbreak peaks, particularly when risk factors such as water shortage and displacement 
+                            are prominent, can prevent large-scale transmission 
+                                <a href="https://pubmed.ncbi.nlm.nih.gov/40727031/">(Azhary et al, 2025).</a>
+                        </p>
+
+                        <p>The choice between pre-emptive and reactive vaccination depends on several factors. The optimal allocation of vaccine doses between endemic and epidemic settings depends on five factors 
+                                <a href="https://royalsocietypublishing.org/rsif/article/12/111/20150703/35616/Optimal-allocation-of-the-limited-oral-cholera">(Moore et al, 2015):</a>
+
+                                <ol>
+                                    <li>The expected size of the epidemic</li>
+                                    <li>The amount of time it will take to begin the reactive vaccinationcampaign in the epidemic setting</li>
+                                    <li>The estimated size of the population at risk of infection in the epidemic setting</li>
+                                    <li>The number of doses remaining in the stockpile</li>
+                                    <li>The time horizon over which we compare performance</li>
+                                </ol>
+                        </p>
+
+                        <p>Implementation flexibility is essential for campaign management. Both pre-emptive and reactive approaches should cover as many people as possible and should be conducted as quickly as possible to 
+                        maximise their effectiveness 
+                            <a href="https://www.semanticscholar.org/reader/259145346824ee885f8fae0bbbdb57fa95eb6705">(López-Gigosos et al, 2011).</a>
+                        </p>
+                </details>       
+                </article>
+
+                <article id="strategy decisions">
+                    <h3>Vaccination Strategy Decisions</h3>
+                    <p class="sources-count">(5 sources)</p>
+
+                    <details>
+                        <summary>During cholera outbreaks with limited vaccination supplies, single-dose strategies are recommended to maximise population coverage and provide rapid protection. The choice between single-dose 
+                            and two-dose regimens depends on outbreak timing, population exposure history, and logistical constraints, with single-dose being preferred for late-stage outbreaks or vaccine-scarce situations.
+                        </summary>
+
+                        <p>
+                            The fundamental decision in cholera vaccination during outbreaks is choosing between single-dose and two-dose strategies, with single-dose approaches increasingly recommended when vaccine supplies 
+                            are limited. In outbreaks, a single-dose strategy may be considered for short-term protection 
+                                <a href="https://pubmed.ncbi.nlm.nih.gov/31266672/">(Sekhar & Kang, 2020).</a>
+                            This approach is particularly valuable because healthcare organisations recommend adopting a single-dose strategy instead of a two-dose strategy. Though the efficacy of a single-dose is lower, it 
+                            provides coverage and rapidly protects as many of the at-risk population as possible, which may avert more cases and deaths when vaccine supplies are limited 
+                                <a href="https://link.springer.com/article/10.1007/s40815-022-01388-8">(Qasem et al, 2022).</a>
+                        </p>
+
+                        <p>The timing of vaccination initiation significantly influences the optimal dosing strategy. For reactive vaccination, a trade-off between timing and effectiveness was revealed. A single dose approach may 
+                            be nearly or more effective than vaccinating fewer individuals with a complete two-dose programme assuming conservative vaccine effectiveness estimates 
+                                <a href="https://link.springer.com/article/10.1186/s12879-019-4688-6">(Havumaki et al, 2019).</a>
+                            The populations previous cholera exposure history should also inform dosing decisions. When OCVs are used for the control of an outbreak in a known high-endemicity hotspot and/or late in an outbreak, 
+                            it may be practical and cost-effective to use a single-dose OCV in order to maximise the number of individuals reached with a first dose
+                                <a href="https://www.semanticscholar.org/reader/9adcb57c936448088f7846531bd6569ecab2f338">(Holmgren, 2021).</a>
+                        </p>
+
+                        <p>Logistical constraints often favour single-dose approaches during outbreak responses. This consideration is particularly important if vaccination occurs later in the outbreak, where rapid protection is 
+                            needed. Given current global constraints, including global OCV shortages, there is an urgent need for each country reporting cholera outbreaks to be strategic on how vaccines are to be deployed 
+                                <a href="https://www.semanticscholar.org/reader/5be56808a1b4c19c7981c0ab42f73086639bd7e2">(Chisenga et al, 2024).</a>
+                        </p>
+
+                    </details>
+                </article>
+
+                <article id="summary">
+                    <h3>Summary</h3>
+                    <p class="sources-count">(System Summary)</p>
+                    <p>Cholera remains a major and growing global health threat. The OCV supply crisis has made strategic prioritisation of vaccination during outbreaks more important than ever. Theres is strong evidence supporting 
+                        several strategies to maximise impact. These include pre-emptive vaccination, geographic and population-level targeting, ring vaccinations, and single-dose strategies during reactive outbreaks. Timing is critical. 
+                        Reactive campaigns implemented within the first few months of an outbreak can still prevent a substantial proportion of cases and deaths. Delayed campaigns remain valuable in prolonged outbreaks, but speed of deployment 
+                        is consistently the most important determinant of impact. Vaccination should be viewed as complementary to the core pillars of cholera control: rapid case management and rehydration, safe water and sanitation, and risk communication.
+                    </p>
+                </article>
+
+                 <article id="have you considered">
+                    <h3>Have you also considered…</h3>
+                    <ul>
+                        <li>What factors influence uptake of vaccinations?</li>
+                        <li>How much is climate change contributing to the frequency of outbreaks of cholera?</li>
+                        <li>What community-based early warning systems have proven effective in reducing health emergencies such as cholera and vector-borne diseases?</li>
+                        </li>
+                    </ul>
+                </article>
+
+                <article id="citations">
+                    <h3>25 Unique Sources Cited in This Report</h3>
+
+                    <details>
+                        <summary>View all citations</summary>
+
+                        <ol>
+                            <li>Ali, M., Nelson, A.R., Lopez, A.L. & Sack, D.A. (2015).
+                                <strong>Updated Global Burden of Cholera in endemic countries.</strong>
+                                <em>PLOS Neglected Tropical Diseases.</em>
+                                <a href="https://doi.org/10.1371/journal.pntd.0003832">https://doi.org/10.1371/journal.pntd.0003832</a>
+                            </li>
+
+                            <li>White, S., Mutula, A.C., Buroko, M.M., Heath, T., Mazimwe, F.K., Blanchet, K., Curtis, V. & Dreibelbis, R. (2022).
+                                <strong>How does handwashing behaviour change in response to a cholera outbreak? A qualitative case study in the Democratic Republic of the Congo.</strong>
+                                <em>PLOS ONE</em>
+                                <a href="https://doi.org/10.1371/journal.pone.0266849">https://doi.org/10.1371/journal.pone.0266849</a>
+                            </li>
+
+                            <li>World Health Organization (2025).
+                                <strong><em>Cholera kills more people for second consecutive year, while prevention and treatment available.</em></strong>
+                                <a href="https://www.who.int/news/item/12-09-2025-cholera-kills-more-people-for-second-consecutive-year-while-prevention-and-treatment-available">https://www.who.int/news/item/12-09-2025-cholera-kills-more-people-for-second-consecutive-year-while-prevention-and-treatment-available</a>
+                            </li>
+
+                            <li>Houston, A.R. & Houston, S. (2025).
+                                <strong>Cholera vaccines for the rich, cholera for the poor: While the global cholera vaccine stockpile runs dry, a booming market for high-income 
+                                    countries exemplifies the chasm between commercial interests and global health needs.</strong>
+                                <em>PLOS Global Public Health</em>
+                                <a href="https://doi.org/10.1371/journal.pgph.0004359">https://doi.org/10.1371/journal.pgph.0004359</a>
+                            </li>
+
+                            <li>World Health Organization. (2026).
+                                <strong><em>Preventive cholera vaccination resumes as global supply reaches critical milestone</em></strong>
+                                <a href="https://www.who.int/news/item/04-02-2026-preventive-cholera-vaccination-resumes-as-global-supply-reaches-critical-milestone">https://www.who.int/news/item/04-02-2026-preventive-cholera-vaccination-resumes-as-global-supply-reaches-critical-milestone</a>
+                            </li>
+
+                            <li>World Health Organization. (2017). 
+                                <strong>Cholera vaccines: WHO position paper – August 2017</strong>
+                                <a href="https://list.essentialmeds.org/files/decisions/bTLGqWYSe4O7IsZrlePTHFRdO1nS8qRHkHoqaiuQ.pdf">https://list.essentialmeds.org/files/decisions/bTLGqWYSe4O7IsZrlePTHFRdO1nS8qRHkHoqaiuQ.pdf</a>
+                            </li>
+
+                            <li>Malembaka, E.B., Bugeme, P.M., Hutchins, C., Xu, H., Hulse, J.D., Demby, M.N., Gallandat, K., Saidi, J.M., Rumedeka, B.B., Itongwa, M., Tshiwedi-Tsilabia, E., Kitoga, F., Bodisa-Matamu, T., Kavunga-Membo, H., Bengehya, J., Kulondwa, J-C., Debes, A.K., Taty, N., Lee, E.C., Lunguya, O. & Azman, A.S. (2024).
+                                <strong>Effectiveness of one dose of killed oral cholera vaccine in an endemic community in the Democratic Republic of the Congo: a matched case-control study.</strong>
+                                <em>The Lancet: Infectious Diseases.</em>
+                                <a href="https://doi.org/10.1016/S1473-3099(23)00742-9">https://doi.org/10.1016/S1473-3099(23)00742-9</a>
+                            </li>
+
+                            <li>Leung, T., Eaton, J. & Matrajt, L. (2022).
+                                <strong>Optimizing one-dose and two-dose cholera vaccine allocation in outbreak settings: A modeling study.</strong>
+                                <em>PLOS Neglected Tropical Diseases.</em>
+                                <a href="https://doi.org/10.1371/journal.pntd.0010358">https://doi.org/10.1371/journal.pntd.0010358</a>
+                            </li>
+
+                            <li>International Federation of Red Cross. (2025).
+                                <strong><em>Cholera.</em></strong>
+                                <a href="https://epidemics.ifrc.org/manager/disease/cholera">https://epidemics.ifrc.org/manager/disease/cholera</a>
+                            </li>
+
+                            <li>Talavera, A. & Pérez, E.M. (2009).
+                                <strong>Is cholera disease associated with poverty?</strong>
+                                <em>Journal of Infection in Developing Countries.</em>
+                                <a href="https://doi.org/10.3855/jidc.410">https://doi.org/10.3855/jidc.410</a>
+                            </li>
+
+                            <li>Global Task Force on Cholera Control. (2026).
+                                <strong><em>Section 9: Cholera Vaccine.</em></strong>
+                                <a href="https://www.choleraoutbreak.org/book-page/section-9-oral-cholera-vaccine.html">https://www.choleraoutbreak.org/book-page/section-9-oral-cholera-vaccine.html</a>
+                            </li>
+
+                            <li>Deen, J. & Clemens, J. (2021).
+                                <strong>Licensed and Recommended Inactivated Oral CholeraVaccines: From Development to Innovative Deployment.</strong>
+                                <em>Tropical Medicine and Infectious Disease.</em>
+                                <a href="https://doi.org/10.3390/tropicalmed6010032">https://doi.org/10.3390/tropicalmed6010032</a>
+                            </li>
+
+                            <li>Sugimoto, J.D., Koepke, A.A., Kenah, E.E., Holloran, M.E., Chowdhury, F., Khan, A.I., LaRocque, R.C., Yang, Y., Ryan, E.T., Qadri, F., Calderwood, S.B., Harris, J.B. & Longini Jr, I.R. (2014).
+                                <strong>Household Transmission of Vibrio cholerae in Bangladesh.</strong>
+                                <em>PLOS Neglected Tropical Diseases.</em>
+                                <a href="https://doi.org/10.1371/journal.pntd.0003314">https://doi.org/10.1371/journal.pntd.0003314</a>
+                            </li>
+
+                            <li>Finger, F., Bertuzzo, E., Luquero, F.J., Naibei, N., Touré, B., Allan, M., Porten, K., Lessler, J., Rinaldo, A. & Azman, A.S. (2018).
+                                <strong>The potential impact of case-area targeted interventions in response to cholera outbreaks: A modeling study.</strong>
+                                <em>PLOS Medicine.</em>
+                                <a href="The potential impact of case-area targeted interventions in response to cholera outbreaks: A modeling study">The potential impact of case-area targeted interventions in response to cholera outbreaks: A modeling study</a>
+                            </li>
+
+                            <li>von Seidlein, L. & Deen, J.L.  (2018).
+                                <strong>Preventing cholera outbreaks through early targeted interventions.</strong>
+                                <em>PLOS Medicine.</em>
+                                <a href="https://doi.org/10.1371/journal.pmed.1002510">https://doi.org/10.1371/journal.pmed.1002510</a>
+                            </li>
+
+                            <li>Reyburn, R., Deen, D.L, Grais, R.F., Bhattacharya, S.K., Sur, D., Lopez, A.L., Jiddawi, M.S., Clemens, J.D. & von Seidlein, L. (2011).
+                                <strong>The Case for Reactive Mass Oral Cholera Vaccinations</strong>
+                                <em>PLOS Neglected Tropical Diseases.</em>
+                                <a href="https://doi.org/10.1371/journal.pntd.0000952">https://doi.org/10.1371/journal.pntd.0000952</a>
+                            </li>
+
+                            <li>Moore, S.M. & Lessler, J. (2015).
+                                <strong>Optimal allocation of the limited oral cholera vaccine supply between endemic and epidemic settings.</strong>
+                                <em>Journal of The Royal Society Interface.</em>
+                                <a href="https://doi.org/10.1098/rsif.2015.0703">https://doi.org/10.1098/rsif.2015.0703</a>
+                            </li>
+
+                            <li>López-Gigosos, R.M., Plaza, E., Díez-Díaz, R.M. & Calvo, M.J. (2011).
+                                <strong>Vaccination Strategies to Combat an Infectious Globe: Oral Cholera Vaccines.</strong>
+                                <em>Journal of Global Infectious Diseases.</em>
+                                <a href="https://doi.org/10.4103/0974-777X.77297">https://doi.org/10.4103/0974-777X.77297</a>
+                            </li>
+
+                            <li>Gyamfi, E.H. (2025).
+                                <strong>Modeling Cholera Dynamics with Vaccination as the Control Strategy and Seasonal-forcing Transmission.</strong>
+                                <a href="https://arxiv.org/abs/2507.09947">https://arxiv.org/abs/2507.09947</a>
+                            </li>
+
+                            <li>Azhary, A., Hajhamed, N.M., Altyip, A.N., Elamin, E., Ali, E.T.O., Ahmed, A. & Siddig, E.E. (2025).
+                                <strong>Resurgence of cholera in Kosti City, Sudan: impact of armed conflict and water supply disruption.</strong>
+                                <em>IJID Regions.</em>
+                                <a href="https://doi.org/10.1016/j.ijregi.2025.100700">https://doi.org/10.1016/j.ijregi.2025.100700</a>
+                            </li>
+
+                            <li>Sekhar, A. & Kang, G. (2020).
+                                <strong>Pathways to a policy for cholera control in India.</strong>
+                                <em>Vaccine.</em>
+                                <a href="https://doi.org/10.1016/j.vaccine.2019.06.036">https://doi.org/10.1016/j.vaccine.2019.06.036</a>
+                            </li>
+
+                            <li>Qasem, A.G., Lam, S.S. & Aqlan, F. (2022).
+                                <strong>A Fuzzy-Based Approach for Cholera Risk Assessment and Vaccine Allocation.</strong>
+                                <em>International Journal of Fuzzy Systems.</em>
+                                <a href="https://doi.org/10.1007/s40815-022-01388-8">https://doi.org/10.1007/s40815-022-01388-8</a>
+                            </li>
+
+                            <li>Havumaki, J., Meza, R.. Phares, C.R., Date, K. & Eisenberg, M.C. (2019).
+                                <strong>Comparing alternative cholera vaccination strategies in Maela refugee camp: using a transmission model in public health practice.</strong>
+                                <em>BMC Infectious Diseases.</em>
+                                <a href="https://doi.org/10.1186/s12879-019-4688-6">https://doi.org/10.1186/s12879-019-4688-6</a>
+                            </li>
+
+                            <li>Holmgren, J. (2021).
+                                <strong>An Update on Cholera Immunity and Current and Future Cholera Vaccines.</strong>
+                                <em>Tropical Medicine and Infectious Diseases.</em>
+                                <a href="https://doi.org/10.3390/tropicalmed6020064">https://doi.org/10.3390/tropicalmed6020064</a>
+                            </li>
+
+                            <li>Chisenga, C.C., Phiri, B., Ng'ombe, H., Muchimba, M., Musukuma-Chifulo, K., Silwamba, S., Laban, N.M., Luchen, C., Liswaniso, F., Chibesa, K., Mubanga, C., Mwape, K., Simuyandi, M., Cunningham, A.F., Sack, D. & Bosomprah, S. (2024).
+                                <strong>Seroconversion and Kinetics of Vibriocidal Antibodies during the First 90 Days of Re-Vaccination with Oral Cholera Vaccine in an Endemic Population.</strong>
+                                <em>Vaccines.</em>
+                                <a href="https://doi.org/10.3390/vaccines12040390">https://doi.org/10.3390/vaccines12040390</a>
+                            </li>
+
+                        </ol>
+                    </details>
+                </article>  
+
+               <hr>
+
+                <article id="Methods">
+                    <h3>Methods</h3>
+                    <p><em>Brief overview of the steps undertaken to produce the output – link to Solace-AI website
+                            which will include a more detailed technical overview of the methods of the system.</em></p>
+                </article>
+
+                <article id="Figures">
+                    <h3>Related Figures from Source Materials</h3>
+                    <p><em>Bank of relevant images/figures from source material used in report - e.g., heat map of affected areas</em></p>
+                </article>
+
+                <footer>
+                    <p><small>Evidence report generated by Solace-AI | <a href="https://solaceai.org">Find out
+                                more</a></small></p>
+                </footer>
+            </div>
+        </main>
+    </div>
+
+    <button id="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" aria-label="Back to top">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+        </svg>
+    </button>
+
+    <script>
+        // Back to top button
+        const backToTopButton = document.getElementById('back-to-top');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                backToTopButton.style.display = 'flex';
+            } else {
+                backToTopButton.style.display = 'none';
+            }
+        });
+
+        // Sidebar toggle functionality
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const sidebar = document.getElementById('sidebar-nav');
+        const closeBtn = sidebar.querySelector('.nav-header .close-btn');
+        const body = document.body;
+
+        function openSidebar() {
+            sidebar.classList.add('is-open-on-mobile');
+            body.classList.add('sidebar-open');
+        }
+
+        function closeSidebar() {
+            sidebar.classList.remove('is-open-on-mobile');
+            body.classList.remove('sidebar-open');
+        }
+
+        if (mobileMenuToggle) {
+            mobileMenuToggle.addEventListener('click', (e) => {
+                e.preventDefault();
+                openSidebar();
+            });
+        }
+
+        closeBtn.addEventListener('click', closeSidebar);
+
+        // Close sidebar when clicking overlay (mobile)
+        body.addEventListener('click', (e) => {
+            if (body.classList.contains('sidebar-open') &&
+                !sidebar.contains(e.target) &&
+                !mobileMenuToggle.contains(e.target)) {
+                closeSidebar();
+            }
+        });
+
+        // Close sidebar when clicking a link (mobile)
+        const sidebarLinks = sidebar.querySelectorAll('a');
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth < 1024) {
+                    closeSidebar();
+                }
+            });
+        });
+
+        // Highlight active section in sidebar
+        function updateActiveLink() {
+            const sections = ['top', 'recommendations', 'evidence', 'background', 'citations'];
+            let currentSection = 'top';
+
+            sections.forEach(sectionId => {
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    const rect = section.getBoundingClientRect();
+                    if (rect.top <= 100 && rect.bottom >= 100) {
+                        currentSection = sectionId;
+                    }
+                }
+            });
+
+            sidebarLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href === '#' + currentSection) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveLink);
+
+        function downloadHTML() {
+            // Get the entire HTML of the page
+            const htmlContent = document.documentElement.outerHTML;
+
+            // Create a Blob with the HTML content
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+
+            // Create a temporary download link
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'solaceai_evidence_report.html';
+
+            // Trigger the download
+            link.click();
+
+            // Clean up
+            URL.revokeObjectURL(link.href);
+        }
+    </script>
+</body>
+
+</html>
