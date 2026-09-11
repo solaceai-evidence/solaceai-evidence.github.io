@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #FAF8F3; font-family: 'IBM Plex Sans', system-ui, sans-serif; color: #1C2419; -webkit-font-smoothing: antialiased; }
+  a { color: #4E64A0; text-decoration: underline; text-underline-offset: 2px; }
+  a:hover { color: #2F4480; }
+  input, button, textarea, select { font: inherit; color: inherit; }
+  @media print { .no-print { display: none !important; } body { background: #fff; } }
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:#FAF8F3">
+
+  <header class="no-print" style="position:sticky;top:0;z-index:20;background:rgba(250,248,243,0.94);backdrop-filter:blur(8px);border-bottom:1px solid #E3E0D6">
+    <div style="max-width:1100px;margin:0 auto;padding:14px 28px;display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+      <a href="#" onClick="{{ goHome }}" style="display:flex;align-items:center;text-decoration:none"><img src="deeper-logo.svg" alt="DEEPER" style="height:30px;width:103px;display:block"></a>
+      <div style="flex:1;min-width:20px"></div>
+      <nav style="display:flex;gap:6px;align-items:center">
+        <button onClick="{{ goHome }}" style="{{ navHomeStyle }}">Home</button>
+        <button onClick="{{ goAssess }}" style="{{ navAssessStyle }}">Assessment</button>
+        <button onClick="{{ goReference }}" style="{{ navRefStyle }}">The framework</button>
+      </nav>
+    </div>
+  </header>
+
+  <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+  <main style="max-width:1100px;margin:0 auto;padding:56px 28px 100px">
+    <div style="max-width:720px">
+      <p style="margin:0 0 18px;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;color:#6E9A22;font-weight:600">A risk assessment tool for AI-generated evidence</p>
+      <h1 style="margin:0 0 22px;font-family:'Newsreader',Georgia,serif;font-size:52px;line-height:1.08;font-weight:500;letter-spacing:-0.015em;text-wrap:pretty">Can you rely on this AI-generated evidence report?</h1>
+      <p style="margin:0 0 20px;font-size:19px;line-height:1.6;color:#3A4237;text-wrap:pretty">DEEPER walks you through six things worth checking before an AI-generated evidence report informs a real decision. It takes around 45 minutes, and you don't need to be a methods expert.</p>
+      <p style="margin:0 0 32px;font-size:19px;line-height:1.6;color:#3A4237;text-wrap:pretty">At the end you get a plain-language summary: what looks sound, what raised a flag, what nobody could reasonably check — and what you can do about each.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:56px">
+        <button onClick="{{ goAssess }}" style="padding:15px 28px;border-radius:999px;border:none;background:#1C2419;color:#FAF8F3;font-size:16px;font-weight:600;cursor:pointer" style-hover="background:#2F3A2A">Start an assessment</button>
+        <button onClick="{{ goReference }}" style="padding:15px 28px;border-radius:999px;border:1px solid #CFCBBE;background:transparent;color:#1C2419;font-size:16px;font-weight:600;cursor:pointer" style-hover="border-color:#1C2419">Read the framework first</button>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-bottom:56px">
+      <div style="background:#fff;border:1px solid #E3E0D6;border-radius:14px;padding:22px">
+        <h3 style="margin:0 0 8px;font-family:'Newsreader',Georgia,serif;font-size:21px;font-weight:500">It's a risk assessment, not a verdict</h3>
+        <p style="margin:0;font-size:15px;line-height:1.6;color:#61675C">DEEPER tells you where the risk sits and how large it looks. It can't tell you whether the report's answer is true.</p>
+      </div>
+      <div style="background:#fff;border:1px solid #E3E0D6;border-radius:14px;padding:22px">
+        <h3 style="margin:0 0 8px;font-family:'Newsreader',Georgia,serif;font-size:21px;font-weight:500">Some things nobody can check</h3>
+        <p style="margin:0;font-size:15px;line-height:1.6;color:#61675C">Two items are hard to assess for anyone outside the topic. We flag those, offer a lighter check, and record what stayed unknown.</p>
+      </div>
+      <div style="background:#fff;border:1px solid #E3E0D6;border-radius:14px;padding:22px">
+        <h3 style="margin:0 0 8px;font-family:'Newsreader',Georgia,serif;font-size:21px;font-weight:500">You leave with a narrative, not a number</h3>
+        <p style="margin:0;font-size:15px;line-height:1.6;color:#61675C">The summary sets out what was found, what it means for the report, and what you might do next — in words you can hand to someone else.</p>
+      </div>
+    </div>
+
+    <h2 style="margin:0 0 6px;font-family:'Newsreader',Georgia,serif;font-size:30px;font-weight:500">The six domains</h2>
+    <p style="margin:0 0 22px;font-size:16px;color:#61675C">DEEPER: Data selection, Evidence quality, Extraction fidelity, Presentation of synthesis, Explanation and transparency, References.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;margin-bottom:56px">
+      <sc-for list="{{ domains }}" as="d" hint-placeholder-count="6">
+        <div style="background:#fff;border:1px solid #E3E0D6;border-radius:14px;padding:20px 22px;display:flex;gap:16px;align-items:flex-start">
+          <div style="width:34px;height:34px;flex:none;border-radius:9px;background:#F0F5E2;color:#5B8319;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:16px">{{ d.key }}</div>
+          <div>
+            <h3 style="margin:0 0 4px;font-size:17px;font-weight:600">{{ d.name }}</h3>
+            <p style="margin:0;font-size:15px;line-height:1.55;color:#61675C">{{ d.plain }}</p>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="background:#EEF1F9;border:1px solid #D3DAEE;border-radius:16px;padding:30px 32px;max-width:820px">
+      <h2 style="margin:0 0 12px;font-family:'Newsreader',Georgia,serif;font-size:28px;font-weight:500">Two things that are hard for anyone to assess</h2>
+      <p style="margin:0 0 18px;font-size:16px;line-height:1.6;color:#3A4237;text-wrap:pretty">The framework marks these two items as requiring expertise or information beyond the report itself. They are not faults of one system, and they remain open whatever the rest of your assessment finds.</p>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <sc-for list="{{ inherent }}" as="r" hint-placeholder-count="5">
+          <div style="display:flex;gap:12px;align-items:flex-start">
+            <div style="width:7px;height:7px;flex:none;border-radius:99px;background:#758BC6;margin-top:8px"></div>
+            <p style="margin:0;font-size:16px;line-height:1.6;color:#2B3340"><strong style="font-weight:600">{{ r.t }}</strong> — {{ r.d }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </main>
+  </sc-if>
+
+  <sc-if value="{{ isAssess }}">
+  <main style="max-width:1100px;margin:0 auto;padding:32px 28px 120px;display:grid;grid-template-columns:210px minmax(0,1fr);gap:44px;align-items:start">
+
+    <aside class="no-print" style="position:sticky;top:88px;display:flex;flex-direction:column;gap:3px">
+      <p style="margin:0 0 10px;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#8A9082;font-weight:600">Progress</p>
+      <sc-for list="{{ steps }}" as="s" hint-placeholder-count="8">
+        <button onClick="{{ s.go }}" style="{{ s.style }}">
+          <span style="flex:1;text-align:left">{{ s.label }}</span>
+          <span style="{{ s.dotStyle }}"></span>
+        </button>
+      </sc-for>
+    </aside>
+
+    <div>
+      <sc-if value="{{ isContext }}">
+        <p style="margin:0 0 10px;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;color:#6E9A22;font-weight:600">Before you start</p>
+        <h1 style="margin:0 0 14px;font-family:'Newsreader',Georgia,serif;font-size:40px;line-height:1.12;font-weight:500">Set the context</h1>
+        <p style="margin:0 0 30px;font-size:17px;line-height:1.6;color:#3A4237;max-width:620px;text-wrap:pretty">These few details decide which parts of the assessment matter most and how strictly to judge them. Rough answers are fine — nothing here is scored.</p>
+        <div style="display:flex;flex-direction:column;gap:14px;max-width:720px">
+          <sc-for list="{{ contextFields }}" as="f" hint-placeholder-count="6">
+            <div style="background:#fff;border:1px solid #E3E0D6;border-radius:14px;padding:18px 20px">
+              <label style="display:block;font-size:15px;font-weight:600;margin-bottom:4px">{{ f.label }}</label>
+              <p style="margin:0 0 10px;font-size:14px;line-height:1.5;color:#7A8074">{{ f.hint }}</p>
+              <textarea rows="2" value="{{ f.value }}" onChange="{{ f.onChange }}" placeholder="{{ f.ph }}" style="width:100%;border:1px solid #E3E0D6;border-radius:9px;padding:10px 12px;font-size:15px;line-height:1.5;resize:vertical;background:#FCFBF7;outline:none" style-focus="border-color:#758BC6;background:#fff"></textarea>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isDomain }}">
+        <p style="margin:0 0 10px;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;color:#6E9A22;font-weight:600">Domain {{ cur.key }} · {{ cur.pos }} of 6</p>
+        <h1 style="margin:0 0 14px;font-family:'Newsreader',Georgia,serif;font-size:40px;line-height:1.12;font-weight:500">{{ cur.name }}</h1>
+        <p style="margin:0 0 18px;font-size:17px;line-height:1.6;color:#3A4237;max-width:640px;text-wrap:pretty">{{ cur.intro }}</p>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:26px;flex-wrap:wrap">
+          <span style="font-size:13.5px;color:#8A9082">Risk for this domain so far</span>
+          <span style="{{ cur.riskStyle }}">{{ cur.riskLabel }}</span>
+        </div>
+
+        <sc-if value="{{ cur.prep }}">
+          <div style="background:#F4F1E7;border:1px solid #DFD9C6;border-left:4px solid #98CA3C;border-radius:12px;padding:18px 22px;margin-bottom:26px;max-width:700px">
+            <p style="margin:0 0 6px;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:#7E8461;font-weight:600">Do this first</p>
+            <p style="margin:0;font-size:16px;line-height:1.6;color:#2F3527">{{ cur.prep }}</p>
+          </div>
+        </sc-if>
+
+        <div style="display:flex;flex-direction:column;gap:16px;max-width:760px">
+          <sc-for list="{{ items }}" as="it" hint-placeholder-count="5">
+            <div style="{{ it.cardStyle }}">
+              <div style="display:flex;gap:10px;align-items:center;margin-bottom:10px;flex-wrap:wrap">
+                <span style="font-size:13px;font-weight:600;color:#8A9082;letter-spacing:0.04em">{{ it.id }}</span>
+                <sc-if value="{{ it.hard }}">
+                  <span style="font-size:12px;font-weight:600;color:#4E64A0;background:#EEF1F9;border:1px solid #D3DAEE;padding:3px 9px;border-radius:99px">Hard to verify</span>
+                </sc-if>
+                <sc-if value="{{ it.crit }}">
+                  <span style="font-size:12px;font-weight:600;color:#9A5228;background:#FBF0E4;border:1px solid #EFDCC3;padding:3px 9px;border-radius:99px">Critical item</span>
+                </sc-if>
+              </div>
+              <h3 style="margin:0 0 10px;font-size:19px;line-height:1.4;font-weight:600;text-wrap:pretty">{{ it.q }}</h3>
+              <p style="margin:0 0 14px;font-size:15.5px;line-height:1.65;color:#61675C;text-wrap:pretty">{{ it.look }}</p>
+
+              <sc-if value="{{ it.how }}">
+                <div style="background:#F7F9FC;border:1px solid #E2E7F2;border-radius:11px;padding:14px 16px;margin-bottom:16px">
+                  <p style="margin:0 0 6px;font-size:13px;font-weight:600;color:#4E64A0">{{ it.howTitle }}</p>
+                  <p style="margin:0;font-size:15px;line-height:1.6;color:#3A4048">{{ it.how }}</p>
+                </div>
+              </sc-if>
+
+              <div style="display:flex;gap:7px;flex-wrap:wrap">
+                <sc-for list="{{ it.opts }}" as="o" hint-placeholder-count="5">
+                  <button onClick="{{ o.pick }}" style="{{ o.style }}">{{ o.label }}</button>
+                </sc-for>
+              </div>
+
+              <sc-if value="{{ it.flagged }}">
+                <div style="margin-top:16px;background:#FBECE8;border:1px solid #EBC7BC;border-radius:11px;padding:12px 16px">
+                  <p style="margin:0;font-size:14.5px;line-height:1.6;color:#7E3524">{{ it.flagNote }}</p>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ it.unknown }}">
+                <div style="margin-top:16px;background:#F3F3F1;border:1px solid #E3E0D6;border-radius:11px;padding:12px 16px">
+                  <p style="margin:0;font-size:14.5px;line-height:1.6;color:#61675C">Recorded as unassessed. This won't count against the report, but it will appear in your summary as a known blind spot.</p>
+                </div>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+
+        <sc-if value="{{ cur.failHit }}">
+          <div style="margin-top:24px;max-width:760px;background:#FBECE8;border:1px solid #EBC7BC;border-left:4px solid #C0503A;border-radius:12px;padding:20px 24px">
+            <h3 style="margin:0 0 8px;font-size:18px;font-weight:600;color:#8C3222">You can stop here</h3>
+            <p style="margin:0 0 14px;font-size:16px;line-height:1.6;color:#5A2A1E">{{ cur.failText }} This is a stop condition: no amount of caveating repairs it, and the rest of the assessment won't change the outcome.</p>
+            <button onClick="{{ goReport }}" style="padding:11px 20px;border-radius:999px;border:none;background:#C0503A;color:#fff;font-size:15px;font-weight:600;cursor:pointer">Skip to the summary</button>
+          </div>
+        </sc-if>
+      </sc-if>
+
+      <div class="no-print" style="display:flex;gap:10px;margin-top:34px;align-items:center;flex-wrap:wrap">
+        <sc-if value="{{ hasBack }}">
+          <button onClick="{{ back }}" style="padding:13px 24px;border-radius:999px;border:1px solid #CFCBBE;background:transparent;font-size:15px;font-weight:600;cursor:pointer" style-hover="border-color:#1C2419">Back</button>
+        </sc-if>
+        <button onClick="{{ next }}" style="padding:13px 26px;border-radius:999px;border:none;background:#1C2419;color:#FAF8F3;font-size:15px;font-weight:600;cursor:pointer" style-hover="background:#2F3A2A">{{ nextLabel }}</button>
+        <span style="font-size:14px;color:#8A9082">{{ answeredNote }}</span>
+      </div>
+    </div>
+  </main>
+  </sc-if>
+
+  <sc-if value="{{ isReport }}">
+  <main style="max-width:860px;margin:0 auto;padding:44px 28px 120px">
+    <p style="margin:0 0 24px;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;color:#6E9A22;font-weight:600">DEEPER summary</p>
+
+    <div style="{{ report.bannerStyle }}">
+      <p style="margin:0 0 14px;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;font-weight:600;opacity:0.7">Overall risk · {{ report.level }}</p>
+      <p style="margin:0 0 16px;font-family:'Newsreader',Georgia,serif;font-size:34px;line-height:1.22;font-weight:500;text-wrap:pretty">{{ report.action }}</p>
+      <p style="margin:0;font-size:15.5px;line-height:1.65;opacity:0.85;text-wrap:pretty">{{ report.detail }}</p>
+    </div>
+
+    <sc-if value="{{ report.hasContext }}">
+      <section style="margin-top:34px">
+        <h2 style="margin:0 0 14px;font-family:'Newsreader',Georgia,serif;font-size:26px;font-weight:500">What was assessed</h2>
+        <div style="background:#fff;border:1px solid #E3E0D6;border-radius:14px;padding:6px 22px">
+          <sc-for list="{{ report.context }}" as="c" hint-placeholder-count="3">
+            <div style="display:grid;grid-template-columns:minmax(0,180px) minmax(0,1fr);gap:18px;padding:13px 0;border-bottom:1px solid #F0EEE6">
+              <span style="font-size:14.5px;font-weight:600;color:#61675C">{{ c.label }}</span>
+              <span style="font-size:15px;line-height:1.55">{{ c.value }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+    </sc-if>
+
+    <section style="margin-top:34px">
+      <h2 style="margin:0 0 6px;font-family:'Newsreader',Georgia,serif;font-size:26px;font-weight:500">Domain by domain</h2>
+      <p style="margin:0 0 16px;font-size:15.5px;color:#61675C">A domain is high risk as soon as any item is answered no or probably no. There is no middle category: the framework has no agreed route to mitigate these concerns, so nothing is downgraded on the strength of a promise.</p>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <sc-for list="{{ report.domains }}" as="d" hint-placeholder-count="6">
+          <div style="background:#fff;border:1px solid #E3E0D6;border-radius:14px;padding:22px 24px">
+            <div style="display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;margin-bottom:10px">
+              <h3 style="margin:0;font-size:18px;font-weight:600;flex:1 1 auto;min-width:0">{{ d.key }}. {{ d.name }}</h3>
+              <span style="{{ d.pillStyle }}">{{ d.levelLabel }}</span>
+            </div>
+            <p style="margin:0 0 12px;font-size:16px;line-height:1.65;color:#3A4237;text-wrap:pretty">{{ d.narrative }}</p>
+            <sc-if value="{{ d.hasIssues }}">
+              <div style="display:flex;flex-direction:column;gap:12px;margin-top:14px">
+                <sc-for list="{{ d.issues }}" as="i" hint-placeholder-count="2">
+                  <div style="border-left:3px solid #E0C9A8;padding-left:14px">
+                    <p style="margin:0 0 4px;font-size:15.5px;line-height:1.6;font-weight:500">{{ i.id }} · {{ i.issue }}</p>
+                    <p style="margin:0;font-size:15px;line-height:1.6;color:#61675C"><span style="color:#9A5228;font-weight:600">Suggested action.</span> {{ i.action }}</p>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <sc-if value="{{ report.hasUnknown }}">
+      <section style="margin-top:34px">
+        <h2 style="margin:0 0 6px;font-family:'Newsreader',Georgia,serif;font-size:26px;font-weight:500">What stayed unknown</h2>
+        <p style="margin:0 0 16px;font-size:15.5px;color:#61675C;text-wrap:pretty">You marked these as no information, or left them unanswered. They are not counted as failures — but they are the parts of this report you are trusting rather than checking.</p>
+        <div style="background:#F3F3F1;border:1px solid #E3E0D6;border-radius:14px;padding:20px 24px;display:flex;flex-direction:column;gap:12px">
+          <sc-for list="{{ report.unknown }}" as="u" hint-placeholder-count="2">
+            <div>
+              <p style="margin:0 0 3px;font-size:15.5px;font-weight:500">{{ u.id }} · {{ u.t }}</p>
+              <p style="margin:0;font-size:15px;line-height:1.6;color:#61675C">{{ u.action }}</p>
+            </div>
+          </sc-for>
+        </div>
+      </section>
+    </sc-if>
+
+    <section style="margin-top:34px">
+      <h2 style="margin:0 0 6px;font-family:'Newsreader',Georgia,serif;font-size:26px;font-weight:500">What remains hard to assess</h2>
+      <p style="margin:0 0 16px;font-size:15.5px;color:#61675C;text-wrap:pretty">These two items are hard for anyone to assess, and stay open even where the rest of the assessment came back low risk. Carry them forward with the report.</p>
+      <div style="background:#EEF1F9;border:1px solid #D3DAEE;border-radius:14px;padding:22px 24px;display:flex;flex-direction:column;gap:13px">
+        <sc-for list="{{ inherent }}" as="r" hint-placeholder-count="5">
+          <p style="margin:0;font-size:16px;line-height:1.6;color:#2B3340"><strong style="font-weight:600">{{ r.t }}</strong> — {{ r.d }}</p>
+        </sc-for>
+      </div>
+    </section>
+
+    <section style="margin-top:34px">
+      <h2 style="margin:0 0 6px;font-family:'Newsreader',Georgia,serif;font-size:26px;font-weight:500">Your next steps</h2>
+      <p style="margin:0 0 16px;font-size:15.5px;line-height:1.6;color:#61675C;text-wrap:pretty">Suggestions, not framework requirements. None of these is an agreed route to mitigating a risk — they go beyond the consensus documents and are offered as sensible practice while that work continues.</p>
+      <div style="background:#fff;border:1px solid #E3E0D6;border-radius:14px;padding:22px 24px;display:flex;flex-direction:column;gap:12px">
+        <sc-for list="{{ report.actions }}" as="a" hint-placeholder-count="3">
+          <div style="display:flex;gap:12px;align-items:flex-start">
+            <div style="width:20px;height:20px;flex:none;border-radius:6px;background:#F0F5E2;color:#5B8319;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;margin-top:2px">{{ a.n }}</div>
+            <p style="margin:0;font-size:16px;line-height:1.6;color:#3A4237;text-wrap:pretty">{{ a.text }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <div class="no-print" style="display:flex;gap:10px;margin-top:34px;flex-wrap:wrap">
+      <button onClick="{{ printIt }}" style="padding:13px 24px;border-radius:999px;border:none;background:#1C2419;color:#FAF8F3;font-size:15px;font-weight:600;cursor:pointer">Print or save as PDF</button>
+      <button onClick="{{ backToAssess }}" style="padding:13px 24px;border-radius:999px;border:1px solid #CFCBBE;background:transparent;font-size:15px;font-weight:600;cursor:pointer">Back to the assessment</button>
+      <button onClick="{{ reset }}" style="padding:13px 24px;border-radius:999px;border:1px solid #CFCBBE;background:transparent;font-size:15px;font-weight:600;cursor:pointer;color:#61675C">Start over</button>
+    </div>
+  </main>
+  </sc-if>
+
+  <sc-if value="{{ isReference }}">
+  <main style="max-width:900px;margin:0 auto;padding:44px 28px 120px">
+    <p style="margin:0 0 10px;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;color:#6E9A22;font-weight:600">Reference</p>
+    <h1 style="margin:0 0 16px;font-family:'Newsreader',Georgia,serif;font-size:42px;line-height:1.1;font-weight:500">The DEEPER framework</h1>
+    <p style="margin:0 0 12px;font-size:17.5px;line-height:1.65;color:#3A4237;max-width:660px;text-wrap:pretty">Six domains, 25 items, one rating scale. Every item is answered <em>Yes</em>, <em>Probably yes</em>, <em>Probably no</em>, <em>No</em>, or <em>No information</em> — the same scale used in risk-of-bias tools, so a hedged answer is a legitimate answer.</p>
+    <p style="margin:0 0 34px;font-size:17.5px;line-height:1.65;color:#3A4237;max-width:660px;text-wrap:pretty">Assessment runs in one stage with stop-first logic: if a report fails a critical item, you can stop there.</p>
+
+    <div style="background:#fff;border:1px solid #E3E0D6;border-radius:14px;padding:24px 26px;margin-bottom:34px">
+      <h2 style="margin:0 0 12px;font-family:'Newsreader',Georgia,serif;font-size:24px;font-weight:500">How a domain gets its rating</h2>
+      <div style="display:flex;flex-direction:column;gap:11px">
+        <p style="margin:0;font-size:16px;line-height:1.6;color:#3A4237"><strong style="color:#4A7A0F;font-weight:600">Low risk</strong> — every item in the domain answered yes or probably yes.</p>
+        <p style="margin:0;font-size:16px;line-height:1.6;color:#3A4237"><strong style="color:#A83F29;font-weight:600">High risk</strong> — any item answered no or probably no.</p>
+        <p style="margin:0;font-size:16px;line-height:1.6;color:#3A4237"><strong style="font-weight:600">Stop conditions</strong> — data that doesn't correspond to the cited sources, or references that don't exist. Neither can be mitigated.</p>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <sc-for list="{{ domains }}" as="d" hint-placeholder-count="6">
+        <section style="background:#fff;border:1px solid #E3E0D6;border-radius:14px;padding:26px 28px">
+          <div style="display:flex;gap:12px;align-items:baseline;margin-bottom:6px;flex-wrap:wrap">
+            <h2 style="margin:0;font-family:'Newsreader',Georgia,serif;font-size:26px;font-weight:500">{{ d.key }}. {{ d.name }}</h2>
+          </div>
+          <p style="margin:0 0 18px;font-size:16px;line-height:1.6;color:#61675C;text-wrap:pretty">{{ d.intro }}</p>
+          <sc-if value="{{ d.prep }}">
+            <div style="background:#F4F1E7;border:1px solid #DFD9C6;border-radius:11px;padding:14px 16px;margin-bottom:18px">
+              <p style="margin:0;font-size:15px;line-height:1.6;color:#4A5040">{{ d.prep }}</p>
+            </div>
+          </sc-if>
+          <div style="display:flex;flex-direction:column">
+            <sc-for list="{{ d.items }}" as="it" hint-placeholder-count="4">
+              <div style="padding:15px 0;border-top:1px solid #F0EEE6;display:grid;grid-template-columns:minmax(0,54px) minmax(0,1fr);gap:14px">
+                <span style="font-size:14px;font-weight:600;color:#8A9082">{{ it.id }}</span>
+                <div>
+                  <p style="margin:0 0 5px;font-size:16px;line-height:1.55;font-weight:500;text-wrap:pretty">{{ it.q }}</p>
+                  <p style="margin:0;font-size:15px;line-height:1.6;color:#61675C;text-wrap:pretty">{{ it.look }}</p>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <p style="margin:16px 0 0;font-size:15px;line-height:1.6;color:#8C3222;background:#FBECE8;border-radius:9px;padding:11px 14px">High concern: {{ d.high }}</p>
+        </section>
+      </sc-for>
+    </div>
+
+    <p style="margin:28px 0 0;font-size:14.5px;line-height:1.6;color:#8A9082">Framework version 2, decision trees version 3 — draft, pre-Delphi. Wording may change after the consensus process.</p>
+  </main>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+const DOMAINS = [
+  { key: 'A', name: 'Selection of Evidence', plain: 'Did it find the right evidence to answer your question?',
+    intro: 'Start with what went in. A report can be beautifully written and still be built on the wrong studies.',
+    high: 'the report does not address the question, or there are major omissions of relevant work.',
+    items: [
+      { id: 'A1', t: 'Relevance to the question', crit: true,
+        q: 'Do the included sources address your question and context?',
+        look: 'Skim the reference list and the opening summary. Do the studies cover the population, setting and decision you actually asked about — or a neighbouring question that is easier to answer?',
+        issue: 'The cited evidence does not clearly address the question that was asked.',
+        mit: 'Re-run the query with the population, setting and decision named explicitly, and compare the two reference lists. Where the mismatch is small, state it as a caveat wherever the report is used.' },
+      { id: 'A2', t: 'Comprehensiveness of the evidence', crit: true, hard: true,
+        q: 'Are the key conclusions based on systematic sources — a recent systematic review, or national or international guidelines?',
+        look: 'This is our stand-in for "what has been left out?". It is a weaker test, on purpose.',
+        howTitle: 'Why we ask it this way',
+        how: 'Judging what a report has missed means searching adversarially, and that is hard for anyone working outside their own topic — our own information specialist found it difficult in unfamiliar areas. So instead: take the two or three headline conclusions and check whether each leans on at least one systematic source. If the conclusions rest only on scattered primary studies, treat that as a signal of possible gaps rather than proof of them.',
+        issue: 'Headline conclusions are not anchored in systematic sources, so there is no way to tell what the report may have missed.',
+        mit: 'Cross-check each headline conclusion against one recent systematic review or guideline you already trust. If the topic is high-stakes, ask a subject expert or an information specialist whether anything major is absent.' },
+      { id: 'A3', t: 'Appropriateness of the evidence',
+        q: 'Are the included sources of an appropriate study type and design to answer the question?',
+        look: 'Effectiveness questions want trials, or systematic reviews of trials. Prevalence wants surveys. "Why" and "how" questions want qualitative work. One large definitive trial can be enough on its own.',
+        issue: 'The study designs included are not well matched to the kind of question being asked.',
+        mit: 'Name the study designs you need in the prompt and re-run. If the mismatch persists, record it as a limitation before the report informs anything.' },
+      { id: 'A4', t: 'Contextual specificity',
+        q: 'Is the evidence specific to the relevant population, participants and setting?',
+        look: 'Check sex, age groups, urban and rural populations, country or region, and language. Evidence from well-resourced hospital settings often does not transfer to the setting you are working in.',
+        issue: 'The evidence comes from populations or settings that may not transfer to the one you care about.',
+        mit: 'Say plainly in your own write-up that transferability is uncertain, and try to find at least one regionally relevant source to sit alongside it.' },
+      { id: 'A5', t: 'Temporal coverage and recency',
+        q: 'Is the temporal coverage appropriate, with up-to-date sources prioritised, and are any date cut-offs visible?',
+        look: 'Look at publication dates across the reference list and for any stated search cut-off. A cluster of older references on a fast-moving topic is a warning sign.',
+        issue: 'Coverage may be out of date, or the date boundaries of the search are not visible.',
+        mit: 'Run one quick date-limited search for anything published since the apparent cut-off on the central question.' }
+    ] },
+  { key: 'B', name: 'Evidence Quality', plain: 'Did it judge how good that evidence actually is?',
+    intro: 'Reports frequently claim to have appraised quality. The question here is whether that appraisal happened, and whether it changed anything.',
+    prep: 'For B1, do not accept a claim at face value. Check whether the methods and results of the appraisal are reported in enough detail that you could inspect them.',
+    high: 'no indication that quality was assessed, ranked, or reflected in the conclusions.',
+    items: [
+      { id: 'B1', t: 'Quality assessment performed', crit: true,
+        q: 'Does it appear that a quality or risk-of-bias assessment was genuinely performed?',
+        look: 'A sentence like "the included studies were of moderate quality" is a claim, not an assessment.',
+        howTitle: 'What counts as genuine',
+        how: 'Look for a named method (RoB 2, ROBINS-I, GRADE, AMSTAR 2, or similar) and for judgements you could trace back to individual studies. If neither is present, answer no — an unverifiable appraisal is the same as no appraisal for your purposes.',
+        issue: 'There is no inspectable evidence that quality or risk of bias was actually appraised.',
+        mit: 'Ask the tool to show its appraisal study by study. If it cannot, appraise the two or three studies the conclusions rest on most heavily yourself.' },
+      { id: 'B2', t: 'Quality described',
+        q: 'Does the output discuss the quality, risk of bias and limitations of its sources, appropriately for the question type?',
+        look: 'Look for limitations that are specific to these studies, rather than generic closing lines about more research being needed.',
+        issue: 'Limitations are absent or generic, so the reader cannot tell how much weight the findings carry.',
+        mit: 'Write a short limitations paragraph of your own, specific to the studies involved, and attach it to the report.' },
+      { id: 'B3', t: 'Quality weighting or ranking',
+        q: 'Is there an indication that sources were weighted or ranked by quality, avoiding poor proxies?',
+        look: 'Good signals: study design, sample size, risk of bias, directness. Poor proxies: journal impact factor, citation counts, publisher prestige.',
+        issue: 'Sources appear to be treated as equally credible, or ranked by proxies that do not track quality.',
+        mit: 'Re-rank the handful of sources that matter most by design and risk of bias, and see whether the picture changes.' },
+      { id: 'B4', t: 'Quality carried through to conclusions',
+        q: 'Is the assessed quality actually reflected in the strength of the conclusions?',
+        look: 'If the report describes the evidence as weak or mixed and then concludes confidently, the appraisal is decorative.',
+        issue: 'Conclusions are stated more confidently than the described quality of the evidence supports.',
+        mit: 'Downgrade the confidence language yourself so it matches the evidence base, before the report is passed on.' }
+    ] },
+  { key: 'C', name: 'Fidelity of Data to the Source', plain: 'Does the report say what the sources actually say?',
+    intro: 'This domain needs about twenty minutes with the original papers. It is the single most informative thing you can do.',
+    prep: 'Take a random selection of five source documents from the reference list, obtain the originals, and compare what the report says about each against the paper itself.',
+    high: 'the data does not correspond to the cited sources. This is a stop condition — discard the report.',
+    items: [
+      { id: 'C1', t: 'Extraction accuracy', crit: true, fail: true,
+        q: 'Are key study characteristics, quality-relevant data, results and conclusions accurately represented, without error?',
+        look: 'Across your five papers, check the number of participants, the study design, the population, the direction and size of the main result, and what the authors themselves concluded.',
+        issue: 'What the report says about its sources does not match what those sources say.',
+        mit: 'There is no mitigation for this. If the extracted data is wrong, nothing downstream of it can be trusted.' },
+      { id: 'C2', t: 'Extraction completeness',
+        q: 'Are those same characteristics, data, results and conclusions described in sufficient detail?',
+        look: 'Accurate but thin is a real problem: a result reported without its population, comparator or uncertainty can be technically true and still misleading.',
+        issue: 'Source detail is too thin to judge what the findings actually mean.',
+        mit: 'Go back to the originals for the studies you will genuinely rely on and fill in the missing detail yourself.' }
+    ] },
+  { key: 'D', name: 'Synthesis & Conclusions', plain: 'Do the conclusions hold up against the evidence behind them?',
+    intro: 'Here the report stops reporting and starts arguing. Check whether the argument follows.',
+    high: 'the conclusions do not follow from the synthesised sources.',
+    items: [
+      { id: 'D1', t: 'Question answered', crit: true,
+        q: 'Does the synthesis answer the question you originally asked?',
+        look: 'Compare the conclusion against the prompt you recorded at the start. Reports drift towards the question the evidence can answer, which is not always yours.',
+        issue: 'The synthesis answers a different question from the one that was asked.',
+        mit: 'Re-prompt with the original question restated tightly, and treat this report as background rather than an answer.' },
+      { id: 'D2', t: 'Appropriateness of synthesis method', hard: true,
+        q: 'Is the synthesis method — narrative, quantitative, meta-analytic — appropriate to the sources included?',
+        look: 'This is a methods judgement, and most practitioners reasonably cannot make it alone. We would rather flag it than pretend otherwise.',
+        howTitle: 'A lighter check you can do',
+        how: 'If numbers from different studies have been pooled into a single figure, ask whether those studies were similar enough in population, intervention and outcome to be added together at all. If they clearly were not, that is a genuine flag. If you cannot tell, record it as unassessed rather than guessing — it will appear in your summary as a known blind spot.',
+        issue: 'The appropriateness of the synthesis method could not be established, or the method does not suit the sources.',
+        mit: 'Ask a methodologist or statistician to read the synthesis section. Until then treat any pooled estimate as indicative rather than as a result.' },
+      { id: 'D3', t: 'Comparability of sources',
+        q: 'Are the settings and populations across the synthesised sources comparable enough to combine?',
+        look: 'Studies in very different health systems, age groups or income settings often should not be spoken about as one body of evidence.',
+        issue: 'Sources that differ substantially have been combined as though they were interchangeable.',
+        mit: 'Separate the evidence by setting or population yourself and see whether the conclusion survives in the one that matters to you.' },
+      { id: 'D4', t: 'Applicability to your context',
+        q: 'Does the synthesis consider the specific location, setting and population you care about?',
+        look: 'A correct general conclusion can still be the wrong basis for a decision in a particular place.',
+        issue: 'The synthesis does not engage with the specific context the report is meant to inform.',
+        mit: 'Add an applicability paragraph of your own describing how your context differs and what that implies.' },
+      { id: 'D5', t: 'Heterogeneity and uncertainty',
+        q: 'Does the output discuss conflicting findings, outliers and counterfactuals?',
+        look: 'A report in which every study agrees is more often a sign of selective reporting than of settled science.',
+        issue: 'Disagreement between studies is absent from the report, which may mean it was smoothed away.',
+        mit: 'Ask the tool directly what evidence contradicts its conclusion, and check whether those studies exist.' },
+      { id: 'D6', t: 'Conclusions follow from sources', crit: true,
+        q: 'Do the conclusions follow directly from the synthesised sources, free of spin and optimism?',
+        look: 'Trace the two or three headline claims back to the studies cited for them. Watch for causal language on correlational evidence, and for recommendations the evidence does not reach.',
+        issue: 'Conclusions overreach the evidence presented for them.',
+        mit: 'Rewrite the headline claims to the strength the sources actually support, and use that version.' }
+    ] },
+  { key: 'E', name: 'Structure & Usability', plain: 'Is it transparent about itself, and usable for your purpose?',
+    intro: 'The quickest domain. Most of it you can answer by looking at the first and last pages.',
+    high: 'flowery or emphatic language, or an unusually long report on a sparse topic.',
+    items: [
+      { id: 'E1', t: 'Date and temporal transparency',
+        q: 'Does the output state when the search was run, the period the evidence covers, and the date and version of the tool used?',
+        look: 'Without these three, the report cannot be reproduced, and you cannot tell when it goes stale.',
+        issue: 'The report does not record when it was produced or what period it covers.',
+        mit: 'Record the model, version and run date yourself now, while you still know them, and attach it to the file.' },
+      { id: 'E2', t: 'Process transparency',
+        q: 'Is the origin of the data reported — training data or live search — and does the report say what was included or excluded, and why?',
+        look: 'A report drawn from model memory and a report drawn from a live literature search carry very different risks.',
+        issue: 'It is unclear where the evidence came from or how it was selected.',
+        mit: 'Ask the tool directly whether it searched live sources and what it excluded. Record the answer alongside the report.' },
+      { id: 'E3', t: 'Structure and proportionality',
+        q: 'Is the output well structured, easy to navigate, and proportionate in length for your use case?',
+        look: 'Judge this against the intended reader you named at the start, not in the abstract.',
+        issue: 'The structure or length does not suit the intended use.',
+        mit: 'Re-prompt for the format and length your audience needs, or restructure it yourself before circulating.' },
+      { id: 'E4', t: 'Clarity and language',
+        q: 'Is the language clear, accessible and appropriate for the intended audience?',
+        look: 'Watch for emphatic or emotive phrasing, unnecessary jargon, and a long polished report on a topic where very little evidence exists. Fluency is not a quality signal.',
+        issue: 'The language oversells, or does not fit the intended audience.',
+        mit: 'Rewrite the summary in your own words at the register your audience needs — this also surfaces claims that turn out to be hollow.' }
+    ] },
+  { key: 'F', name: 'Citations', plain: 'Do the references exist, and do they say what is claimed?',
+    intro: 'Fabricated and misattributed references remain the most common serious failure. Twenty minutes here is well spent.',
+    prep: 'Randomly select five citations from the report and verify them against their original sources: that each exists, and that it supports what the report says it supports.',
+    high: 'hallucinated citations or references. This is a stop condition — discard the report.',
+    items: [
+      { id: 'F1.1', t: 'In-text citations verified', crit: true,
+        q: 'Does each in-text citation correspond to a source in the reference list?',
+        look: 'Follow five in-text citations through to the list. Numbering that has drifted is common and matters.',
+        issue: 'In-text citations do not reliably match the reference list.',
+        mit: 'Check every citation attached to a claim you intend to rely on, and repair or remove the ones that do not resolve.' },
+      { id: 'F1.2', t: 'References verified', crit: true, fail: true,
+        q: 'Does each reference exist — can you find and retrieve the original?',
+        look: 'Search the title and the DOI. A reference with plausible authors and a journal that does not resolve to a real paper is a fabrication.',
+        issue: 'One or more references could not be found and may not exist.',
+        mit: 'There is no mitigation for fabricated references. Discard the report.' },
+      { id: 'F1.3', t: 'Claims supported by sources', crit: true,
+        q: 'Does each cited source genuinely support the claim attributed to it?',
+        look: 'Real paper, real claim, wrong pairing is the subtlest failure of the three — and the easiest to miss when the citation resolves cleanly.',
+        issue: 'Cited sources do not support the claims attached to them.',
+        mit: 'Verify the citation behind every claim you will act on, and drop any claim whose source does not carry it.' },
+      { id: 'F2', t: 'Statements supported by evidence',
+        q: 'Are all key claims, findings and conclusions supported by cited evidence?',
+        look: 'Unsupported sentences tend to cluster in the executive summary and the recommendations, where they do the most work.',
+        issue: 'Key claims are presented without any evidential support.',
+        mit: 'Mark the unsupported claims and either find sources for them yourself or strike them from what you circulate.' }
+    ] }
+];
+
+const INHERENT = [
+  { t: 'Comprehensiveness of the evidence (A2)', d: 'it is possible to assess what evidence has been included in a report, but it is more difficult to assess what has been excluded, without expert knowledge and access to systematic evidence sources such as recent systematic reviews and national or international guidelines.' },
+  { t: 'Appropriateness of the synthesis method (D2)', d: 'whether the synthesis method suits the sources included is a methods judgement. The framework marks this item as needing additional explanation, and it is not one most practitioners can settle alone.' }
+];
+
+const CONTEXT_FIELDS = [
+  { k: 'prompt', label: 'The original prompt', hint: 'Paste the question exactly as it was asked.', ph: 'What does the evidence say about…' },
+  { k: 'system', label: 'AI system, model and version', hint: 'As specific as you can be.', ph: 'e.g. Elicit, Feb 2026 build' },
+  { k: 'date', label: 'Date the query was run', hint: '', ph: 'e.g. 14 January 2026' },
+  { k: 'qtype', label: 'Type of question', hint: 'Effectiveness, diagnostic, prevalence, policy — and broad or specific?', ph: 'e.g. effectiveness, fairly specific' },
+  { k: 'matters', label: 'What matters for this question', hint: 'The population, setting and decision the answer has to serve.', ph: 'e.g. under-5s in rural district health posts; procurement decision' },
+  { k: 'user', label: 'Who will use it, and how', hint: 'Their level of evidence and AI experience, and what the output will be applied to.', ph: 'e.g. district health managers, intermediate; informing a 2026 plan' }
+];
+
+const OPTS = [ ['Y','Yes'], ['PY','Probably yes'], ['PN','Probably no'], ['N','No'], ['NI',"Can't tell"] ];
+const isNo = v => v === 'N' || v === 'PN';
+const LEVEL_META = {
+  low:  { label: 'Low risk',  fg: '#4A7A0F', bg: '#F0F5E2', bd: '#D8E6B4' },
+  high: { label: 'High risk',  fg: '#A83F29', bg: '#FBECE8', bd: '#EBC7BC' },
+  none: { label: 'Not assessed', fg: '#7A8074', bg: '#F1F0EC', bd: '#DFDCD2' },
+  partial: { label: 'Partly assessed', fg: '#7A8074', bg: '#F1F0EC', bd: '#DFDCD2' },
+  stop: { label: 'Do not use', fg: '#8C3222', bg: '#F8E2DC', bd: '#E3B3A5' }
+};
+
+class Component extends DCLogic {
+  state = { screen: 'home', step: 0, ans: {}, ctx: {} };
+
+  componentDidMount() {
+    try {
+      const raw = localStorage.getItem('deeper.session.v1');
+      if (raw) { const s = JSON.parse(raw); this.setState({ ans: s.ans || {}, ctx: s.ctx || {}, step: s.step || 0 }); }
+    } catch (e) {}
+  }
+  persist(next) {
+    const s = Object.assign({ ans: this.state.ans, ctx: this.state.ctx, step: this.state.step }, next);
+    try { localStorage.setItem('deeper.session.v1', JSON.stringify(s)); } catch (e) {}
+  }
+  go(screen, step) { this.setState(st => ({ screen, step: step === undefined ? st.step : step })); window.scrollTo(0, 0); }
+  setAns(id, v) { this.setState(st => { const ans = Object.assign({}, st.ans, { [id]: v }); this.persist({ ans }); return { ans }; }); }
+  setCtx(k, v) { this.setState(st => { const ctx = Object.assign({}, st.ctx, { [k]: v }); this.persist({ ctx }); return { ctx }; }); }
+
+  domainLevel(d) {
+    const flagged = d.items.filter(i => isNo(this.state.ans[i.id]));
+    const answered = d.items.filter(i => this.state.ans[i.id]).length;
+    if (flagged.some(i => i.fail)) return { level: 'stop', flagged, answered };
+    if (flagged.length) return { level: 'high', flagged, answered };
+    return { level: answered === 0 ? 'none' : (answered < d.items.length ? 'partial' : 'low'), flagged, answered };
+  }
+
+  buildReport() {
+    const ctx = this.state.ctx, ans = this.state.ans;
+    const results = DOMAINS.map(d => Object.assign({ d }, this.domainLevel(d)));
+    const stopped = results.filter(r => r.level === 'stop');
+    const highs = results.filter(r => r.level === 'high');
+    const partials = results.filter(r => r.level === 'partial' || r.level === 'none');
+    const total = DOMAINS.reduce((n, d) => n + d.items.length, 0);
+    const done = DOMAINS.reduce((n, d) => n + d.items.filter(i => ans[i.id]).length, 0);
+    const coverage = done === 0 ? 'No items answered yet.' : done < total
+      ? 'Based on ' + done + ' of ' + total + ' items — the rest are unanswered, so this is a partial picture.'
+      : 'All ' + total + ' items were answered.';
+
+    let level, action, detail;
+    if (done === 0) {
+      level = 'none';
+      action = 'Work through the six domains and this summary will fill in as you go.';
+      detail = 'Nothing here can be read as reassurance until it does.';
+    } else if (stopped.length) {
+      const ids = stopped.map(r => r.flagged.filter(i => i.fail).map(i => i.id).join(' and ')).join(' and ');
+      level = 'stop';
+      action = 'Do not use this report. Go back to the primary literature, or re-run the query.';
+      detail = ids + ' failed, which the framework treats as a stop condition: the report does not faithfully represent its sources, and every claim downstream of that inherits the error. ' + coverage;
+    } else if (highs.length) {
+      level = 'high';
+      action = 'This report should not be used to inform a decision until the issues below are addressed.';
+      detail = highs.length + (highs.length === 1 ? ' domain reached' : ' domains reached') + ' high risk: ' + highs.map(r => r.d.key + ' (' + r.d.name.toLowerCase() + ')').join(', ') + '. ' + coverage;
+    } else if (partials.length) {
+      level = 'partial';
+      action = 'Nothing has been flagged so far, but the assessment is not finished.';
+      detail = 'Domains still open: ' + partials.map(r => r.d.key).join(', ') + '. ' + coverage;
+    } else {
+      level = 'low';
+      action = 'Nothing in this assessment flagged a risk. The two limits below still apply.';
+      detail = 'Every item came back yes or probably yes. That is a good sign about the parts you could check, not a guarantee about the parts nobody can. ' + coverage;
+    }
+
+    const unknown = [];
+    DOMAINS.forEach(d => d.items.forEach(i => {
+      const v = ans[i.id];
+      if (!v || v === 'NI') unknown.push({ id: i.id, t: i.t, action: v === 'NI' ? (i.hard ? 'Recorded as impossible to judge — the framework itself flags this item as hard to verify.' : 'Recorded as no information or not applicable.') : 'Not yet answered.' });
+    }));
+
+    const actions = [];
+    if (stopped.length) actions.push('Do not circulate this report. A stop condition cannot be caveated away.');
+    results.forEach(r => r.flagged.forEach(i => { if (!i.fail) actions.push(i.mit); }));
+    if (!actions.length) actions.push('Attach this summary to the report, so whoever reads it next can see what was checked and what was not.');
+    actions.push('Record the AI system, version and run date alongside the report. This assessment applies to that specific output only.');
+
+    const bm = LEVEL_META[level];
+    return {
+      level: bm.label, action, detail,
+      bannerStyle: 'background:' + bm.bg + ';border:1px solid ' + bm.bd + ';border-left:5px solid ' + bm.fg + ';border-radius:16px;padding:28px 32px;color:' + bm.fg,
+      hasContext: CONTEXT_FIELDS.some(f => (ctx[f.k] || '').trim()),
+      context: CONTEXT_FIELDS.filter(f => (ctx[f.k] || '').trim()).map(f => ({ label: f.label, value: ctx[f.k] })),
+      domains: results.map(r => {
+        const m = LEVEL_META[r.level];
+        const answered = r.answered;
+        let narrative;
+        if (r.level === 'stop') narrative = 'A stop condition was triggered in this domain.';
+        else if (!r.flagged.length) narrative = answered === 0 ? 'Not assessed yet.' : (answered < r.d.items.length ? 'Nothing flagged in the ' + answered + ' of ' + r.d.items.length + ' items you answered.' : 'Every item here came back positively.');
+        else narrative = r.flagged.length + (r.flagged.length === 1 ? ' item was answered no or probably no' : ' items were answered no or probably no') + (r.flagged.some(i => i.crit) ? ', including a critical item.' : '.');
+        return {
+          key: r.d.key, name: r.d.name, narrative,
+          levelLabel: r.level === 'partial' ? 'Partly assessed — ' + answered + ' of ' + r.d.items.length : m.label,
+          pillStyle: 'flex:none;white-space:nowrap;font-size:12.5px;font-weight:600;color:' + m.fg + ';background:' + m.bg + ';border:1px solid ' + m.bd + ';padding:3px 11px;border-radius:99px',
+          hasIssues: r.flagged.length > 0,
+          issues: r.flagged.map(i => ({ id: i.id, issue: i.issue, action: i.fail ? 'No mitigation is available for this. It is a stop condition.' : i.mit }))
+        };
+      }),
+      hasUnknown: unknown.length > 0, unknown,
+      actions: actions.filter((a, n, arr) => arr.indexOf(a) === n).map((text, n) => ({ n: n + 1, text }))
+    };
+  }
+
+  renderVals() {
+    const st = this.state, s = st.screen;
+    const navStyle = on => 'padding:8px 15px;border-radius:999px;border:none;cursor:pointer;font-size:14.5px;font-weight:' + (on ? '600' : '500') + ';background:' + (on ? '#1C2419' : 'transparent') + ';color:' + (on ? '#FAF8F3' : '#61675C');
+
+    const stepDefs = [{ label: 'Context' }].concat(DOMAINS.map(d => ({ label: d.key + '. ' + d.name }))).concat([{ label: 'Summary' }]);
+    const steps = stepDefs.map((sd, n) => {
+      const on = s === 'assess' && st.step === n || (s === 'report' && n === 7);
+      let dot = '';
+      if (n >= 1 && n <= 6) {
+        const d = DOMAINS[n - 1];
+        const answered = d.items.filter(i => st.ans[i.id]).length;
+        const m = LEVEL_META[this.domainLevel(d).level];
+        dot = answered === 0 ? 'width:8px;height:8px;border-radius:99px;border:1.5px solid #D6D2C6'
+          : (answered < d.items.length ? 'width:8px;height:8px;border-radius:99px;background:#D6D2C6'
+          : 'width:8px;height:8px;border-radius:99px;background:' + m.fg);
+      }
+      return {
+        label: sd.label, dotStyle: dot,
+        style: 'display:flex;align-items:center;gap:8px;width:100%;padding:8px 11px;border-radius:9px;border:none;cursor:pointer;font-size:14px;text-align:left;font-weight:' + (on ? '600' : '400') + ';background:' + (on ? '#EDEAE0' : 'transparent') + ';color:' + (on ? '#1C2419' : '#61675C'),
+        go: () => (n === 7 ? this.go('report') : this.go('assess', n))
+      };
+    });
+
+    const isDomain = s === 'assess' && st.step >= 1 && st.step <= 6;
+    const d = isDomain ? DOMAINS[st.step - 1] : null;
+    const items = !d ? [] : d.items.map(i => {
+      const v = st.ans[i.id];
+      const flagged = isNo(v);
+      return {
+        id: i.id, q: i.q, look: i.look, how: i.how, howTitle: i.howTitle || 'How to check this',
+        hard: !!i.hard, crit: !!i.crit, flagged: flagged, unknown: v === 'NI',
+        flagNote: flagged ? (i.fail ? 'Answered no. This is a stop condition for the whole assessment.' : 'Answered no. This puts domain ' + d.key + ' at high risk. You will find the detail, and what you can do about it, in your summary.') : '',
+        cardStyle: 'background:#fff;border:1px solid ' + (flagged ? '#EBC7BC' : '#E3E0D6') + ';border-radius:14px;padding:24px 26px' + (flagged ? ';box-shadow:inset 3px 0 0 #C0503A' : ''),
+        opts: OPTS.map(([code, label]) => {
+          const on = v === code;
+          const tone = on ? (isNo(code) ? '#C0503A' : code === 'NI' ? '#7A8074' : '#6E9A22') : null;
+          return { label, pick: () => this.setAns(i.id, code),
+            style: 'padding:9px 16px;border-radius:999px;cursor:pointer;font-size:14.5px;font-weight:' + (on ? '600' : '500') + ';border:1px solid ' + (on ? tone : '#DCD8CC') + ';background:' + (on ? tone : '#fff') + ';color:' + (on ? '#fff' : '#4A5046') };
+        })
+      };
+    });
+
+    const failItem = d && d.items.find(i => i.fail && isNo(st.ans[i.id]));
+    const answeredInDomain = d ? d.items.filter(i => st.ans[i.id]).length : 0;
+
+    return {
+      domains: DOMAINS, inherent: INHERENT,
+      isHome: s === 'home', isAssess: s === 'assess', isReport: s === 'report', isReference: s === 'reference',
+      isContext: s === 'assess' && st.step === 0, isDomain,
+      navHomeStyle: navStyle(s === 'home'), navAssessStyle: navStyle(s === 'assess' || s === 'report'), navRefStyle: navStyle(s === 'reference'),
+      goHome: () => this.go('home'), goAssess: () => this.go('assess'), goReference: () => this.go('reference'), goReport: () => this.go('report'),
+      backToAssess: () => this.go('assess', 6),
+      printIt: () => window.print(),
+      reset: () => { try { localStorage.removeItem('deeper.session.v1'); } catch (e) {} this.setState({ ans: {}, mit: {}, ctx: {}, step: 0, screen: 'home' }); window.scrollTo(0, 0); },
+      steps,
+      contextFields: CONTEXT_FIELDS.map(f => ({ label: f.label, hint: f.hint, ph: f.ph, value: st.ctx[f.k] || '', onChange: e => this.setCtx(f.k, e.target.value) })),
+      cur: d ? (function (self) {
+        const r = self.domainLevel(d);
+        const m = LEVEL_META[r.level];
+        return { key: d.key, pos: st.step, name: d.name, intro: d.intro, prep: d.prep || '',
+          failHit: !!failItem, failText: failItem ? failItem.issue : '',
+          riskLabel: r.level === 'partial' ? 'Partly assessed — ' + r.answered + ' of ' + d.items.length : m.label,
+          riskStyle: 'display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:600;color:' + m.fg + ';background:' + m.bg + ';border:1px solid ' + m.bd + ';padding:6px 14px;border-radius:99px' };
+      })(this) : {},
+      items,
+      hasBack: st.step > 0,
+      next: () => (st.step >= 6 ? this.go('report') : this.go('assess', st.step + 1)),
+      back: () => this.go('assess', Math.max(0, st.step - 1)),
+      nextLabel: st.step === 0 ? 'Start with Domain A' : (st.step >= 6 ? 'See the summary' : 'Next domain'),
+      answeredNote: isDomain ? answeredInDomain + ' of ' + d.items.length + ' answered' : '',
+      report: this.buildReport()
+    };
+  }
+}
+</script>
+</body>
+</html>
